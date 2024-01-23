@@ -6,6 +6,8 @@ package main
 
 import (
 	"flag"
+
+	"github.com/andrey4d/ytapiserver/internal/config"
 	"github.com/andrey4d/ytapiserver/internal/log"
 
 	"github.com/andrey4d/ytapiserver/internal/servers/apiserver"
@@ -13,22 +15,27 @@ import (
 )
 
 var configPath string
-var LogLevel string
 
 func init() {
 	flag.StringVar(&configPath, "config", "configs/apiserver.yaml", "path to config file")
 }
 
 func main() {
-	flag.Parse()
-	log.Info("config ", configPath)
 
-	config := apiserver.NewConfig()
+	flag.Parse()
+	logHandler := log.New()
+	logger := logHandler.Logger
+	logger.Info("config ", configPath)
+
+	config := config.NewConfig()
 	yaml.ParseFile(configPath, config)
+	logHandler.SetLogLevel(config.LogLevel)
 
 	apiServer := apiserver.New(config)
+	apiServer.SetLogger(logger)
+
 	if err := apiServer.Start(); err != nil {
-		log.Fatal(err)
+		logger.Fatal(err)
 	}
 
 }

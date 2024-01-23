@@ -7,50 +7,50 @@ package apiserver
 import (
 	"net/http"
 
-	"github.com/gorilla/mux"
+	"github.com/andrey4d/ytapiserver/internal/config"
+	"github.com/go-chi/chi/v5"
+	"github.com/go-chi/chi/v5/middleware"
 	"github.com/sirupsen/logrus"
 )
 
 type ApiServer struct {
-	config *Config
-	logger *logrus.Logger
-	router *mux.Router
+	config      *config.Config
+	logger      *logrus.Logger
+	router      *chi.Mux
+	middlewares *chi.Middlewares
 }
 
-var apiServer *ApiServer
-
-func New(config *Config) *ApiServer {
+func New(config *config.Config) *ApiServer {
 	return &ApiServer{
 		config: config,
-		logger: logrus.New(),
-		router: mux.NewRouter(),
+		router: chi.NewRouter(),
 	}
 }
 
-func GetApiServer(config *Config) *ApiServer {
-	if apiServer != nil {
-		return apiServer
-	}
-	return New(config)
-}
+func (s *ApiServer) Start() error {
 
-func (s ApiServer) Start() error {
-
-	s.logger.Info(s.config)
-
-	if err := s.ConfigureLogger(); err != nil {
-		return err
+	if s.logger == nil {
+		s.logger = logrus.New()
+		s.logger.Info("apiServer new default logger")
 	}
 
 	address := s.config.Address + ":" + s.config.Port
 	s.logger.Info("started api server at address ", address)
+
+	// TODO: middleware
+	s.router.Use(middleware.RequestID)
+	s.router.Use(middleware.RealIP)
+	s.router.Use(s.GetMwLogger(s.logger))
+	s.router.Use(middleware.Recoverer)
+	s.router.Use(middleware.URLFormat)
 
 	s.ConfigureRouter()
 
 	return http.ListenAndServe(address, s.router)
 }
 
-func (s ApiServer) ConfigureRouter() {
+func (s *ApiServer) ConfigureRouter() {
+
 	s.router.HandleFunc("/hello", s.handlerHello())
 	s.router.HandleFunc("/info", s.handlerInfo())
 }

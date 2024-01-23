@@ -3,12 +3,11 @@ module github.com/andrey4d/ytapiserver
 go 1.21.6
 
 require (
-	github.com/gorilla/mux v1.8.1
+	github.com/go-chi/chi/v5 v5.0.11
 	github.com/kkdai/youtube/v2 v2.10.0
 	github.com/sirupsen/logrus v1.9.3
 	github.com/spf13/pflag v1.0.5
 	github.com/stretchr/testify v1.8.4
-	golang.org/x/net v0.20.0
 	gopkg.in/yaml.v3 v3.0.1
 )
 
@@ -25,6 +24,7 @@ require (
 	github.com/pmezard/go-difflib v1.0.1-0.20181226105442-5d4384ee4fb2 // indirect
 	github.com/rivo/uniseg v0.4.4 // indirect
 	github.com/vbauerster/mpb/v5 v5.4.0 // indirect
+	golang.org/x/net v0.20.0 // indirect
 	golang.org/x/sys v0.16.0 // indirect
 	golang.org/x/text v0.14.0 // indirect
 )
