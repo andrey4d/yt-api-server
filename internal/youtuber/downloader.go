@@ -1,15 +1,14 @@
-package cli
+package youtuber
 
 import (
 	"crypto/tls"
 	"fmt"
 	"net"
 	"net/http"
-	"net/url"
 	"strconv"
 	"time"
 
-	"golang.org/x/net/http/httpproxy"
+	"github.com/spf13/pflag"
 
 	"github.com/kkdai/youtube/v2"
 	ytdl "github.com/kkdai/youtube/v2/downloader"
@@ -23,17 +22,20 @@ var (
 	downloader         *ytdl.Downloader
 )
 
-func getDownloader() *ytdl.Downloader {
+func addVideoSelectionFlags(flagSet *pflag.FlagSet) {
+	flagSet.StringVarP(&outputQuality, "quality", "q", "medium", "The itag number or quality label (hd720, medium)")
+	flagSet.StringVarP(&mimetype, "mimetype", "m", "", "Mime-Type to filter (mp4, webm, av01, avc1) - applicable if --quality used is quality label")
+	flagSet.StringVarP(&language, "language", "l", "", "Language to filter")
+}
+
+func GetDownloader() *ytdl.Downloader {
 	if downloader != nil {
 		return downloader
 	}
 
-	proxyFunc := httpproxy.FromEnvironment().ProxyFunc()
 	httpTransport := &http.Transport{
 		// Proxy: http.ProxyFromEnvironment() does not work. Why?
-		Proxy: func(r *http.Request) (uri *url.URL, err error) {
-			return proxyFunc(r.URL)
-		},
+
 		IdleConnTimeout:       60 * time.Second,
 		TLSHandshakeTimeout:   10 * time.Second,
 		ExpectContinueTimeout: 1 * time.Second,
@@ -44,7 +46,7 @@ func getDownloader() *ytdl.Downloader {
 		}).DialContext,
 	}
 
-	youtube.SetLogLevel("info")
+	// youtube.SetLogLevel(logLevel)
 
 	if insecureSkipVerify {
 		youtube.Logger.Info("Skip server certificate verification")
@@ -59,8 +61,8 @@ func getDownloader() *ytdl.Downloader {
 	return downloader
 }
 
-func getVideoWithFormat(videoID string) (*youtube.Video, *youtube.Format, error) {
-	dl := getDownloader()
+func GetVideoWithFormat(videoID string) (*youtube.Video, *youtube.Format, error) {
+	dl := GetDownloader()
 	video, err := dl.GetVideo(videoID)
 	if err != nil {
 		return nil, nil, err

@@ -22,6 +22,8 @@ build: go-build
 
 clean: go-clean
 
+.PHONY: test
+test: go-test
 
 ## go-build: build binary `go build` internally.
 go-build: 
@@ -33,3 +35,8 @@ go-clean:
 	@echo "  >  Cleaning build cache"
 	rm -rf ./bin 
 	go clean
+
+## go-test: Run tests `go test` internally.
+go-test: 
+	@echo "  >  Run tests..."
+	go test -v ./...
