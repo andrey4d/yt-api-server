@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title></title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="">
+        <script src="https://unpkg.com/htmx.org@1.9.10" integrity="sha384-D1Kt99CQMDuVetoL1lrYwg5t+9QdHe7NLX/SoJYkXDFfX37iInKRy5xLSi8nO7UC" crossorigin="anonymous"></script>
+    </head>
+    <body class="container" id="main-container">
+        
+        <form hx-post="/info/" hx-target="#main-container">
+            <div>
+                <label for="film-title">URL</label>
+                <input type="text" name="video_tag" id="film-url" class="form-control" />
+            </div>
+            <div style="padding: 3px;">
+                <button type="submit" class="btn btn-primary" >
+                    Submit
+                </button>
+            </div>
+        </form>
+    
+    <form class="video_tag" hx-post="/url/" hx-trigger="change">
+    <fieldset id="video-select">
+      <legend>Choose video tag</legend>
+        {{ range .Formats }}
+
+        <input type="radio" id="{{ .Itag }}" name="films" value="{{ .Itag }}" />
+        <label for="{{ .Itag }}">{{ .Itag }} {{.Size}} {{.AudioChannels}} {{ .VideoQuality }} - {{ .MimeType }}</label><br>
+
+        {{ end }}
+    </fieldset>
+  </form>
+
+    </body>
+</html>

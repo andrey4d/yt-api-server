@@ -31,12 +31,7 @@ func (s *ApiServer) Start() error {
 		s.logger.Info("apiServer new default logger")
 	}
 
-	// TODO: middleware
-	// s.router.Use(middleware.RequestID)
-	// s.router.Use(middleware.RealIP)
-	// s.router.Use(s.GetMwLogger(s.logger))
-	// s.router.Use(middleware.Recoverer)
-	// s.router.Use(middleware.URLFormat)
+	s.router.LoadHTMLGlob("web/templates/*.html")
 
 	s.ConfigureRouter()
 
@@ -46,7 +41,7 @@ func (s *ApiServer) Start() error {
 }
 
 func (s *ApiServer) ConfigureRouter() {
-
 	s.router.GET("/hello", s.handlerHello())
-	s.router.GET("/info", s.handlerInfo)
+	s.router.GET("/", s.handlerIndex)
+	s.router.POST("/info/", s.handlerInfo)
 }

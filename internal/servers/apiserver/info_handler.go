@@ -37,7 +37,12 @@ type VideoInfo struct {
 }
 
 func (s ApiServer) handlerInfo(c *gin.Context) {
-	url := "https://www.youtube.com/watch?v=3WsEDZRif6U"
+
+	url := c.PostForm("video_tag")
+	if url == "" {
+		s.logger.Info("++ set default url")
+		url = "https://www.youtube.com/watch?v=3WsEDZRif6U"
+	}
 
 	videoInfo, err := getVideoInfo(url)
 	if err != nil {
@@ -45,8 +50,15 @@ func (s ApiServer) handlerInfo(c *gin.Context) {
 		c.String(http.StatusInternalServerError, "%v", err)
 	}
 
-	s.logger.Infof("++ handlerInfo %s\n", url)
-	c.JSON(http.StatusOK, *videoInfo.Formats)
+	s.logger.Infof("++ handlerInfo %s %s\n", c.Request.Method, url)
+	// c.JSON(http.StatusOK, *videoInfo.Formats)
+
+	Formats := map[string][]VideoFormat{
+		"Formats": *videoInfo.Formats,
+	}
+
+	c.HTML(http.StatusOK, "index.html", Formats)
+
 }
 
 func getVideoInfo(url string) (*VideoInfo, error) {
