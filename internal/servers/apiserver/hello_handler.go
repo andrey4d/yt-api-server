@@ -5,14 +5,17 @@
 package apiserver
 
 import (
-	"io"
 	"net/http"
+
+	"github.com/gin-gonic/gin"
 )
 
-func (s ApiServer) handlerHello() http.HandlerFunc {
+func (s ApiServer) handlerHello() gin.HandlerFunc {
 
-	return func(w http.ResponseWriter, r *http.Request) {
-		s.logger.Info("Hello ", r.Method, r.Host)
-		io.WriteString(w, "Hello world!")
+	return func(c *gin.Context) {
+		s.logger.Info("Hello ", c.Request.Method)
+		c.JSON(http.StatusOK, gin.H{
+			"message": "Hello world!",
+		})
 	}
 }

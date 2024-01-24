@@ -5,25 +5,22 @@
 package apiserver
 
 import (
-	"net/http"
-
 	"github.com/andrey4d/ytapiserver/internal/config"
-	"github.com/go-chi/chi/v5"
-	"github.com/go-chi/chi/v5/middleware"
+	"github.com/gin-gonic/gin"
 	"github.com/sirupsen/logrus"
 )
 
 type ApiServer struct {
-	config      *config.Config
-	logger      *logrus.Logger
-	router      *chi.Mux
-	middlewares *chi.Middlewares
+	config *config.Config
+	logger *logrus.Logger
+	router *gin.Engine
 }
 
 func New(config *config.Config) *ApiServer {
+
 	return &ApiServer{
 		config: config,
-		router: chi.NewRouter(),
+		router: gin.Default(),
 	}
 }
 
@@ -34,23 +31,22 @@ func (s *ApiServer) Start() error {
 		s.logger.Info("apiServer new default logger")
 	}
 
-	address := s.config.Address + ":" + s.config.Port
-	s.logger.Info("started api server at address ", address)
-
 	// TODO: middleware
-	s.router.Use(middleware.RequestID)
-	s.router.Use(middleware.RealIP)
-	s.router.Use(s.GetMwLogger(s.logger))
-	s.router.Use(middleware.Recoverer)
-	s.router.Use(middleware.URLFormat)
+	// s.router.Use(middleware.RequestID)
+	// s.router.Use(middleware.RealIP)
+	// s.router.Use(s.GetMwLogger(s.logger))
+	// s.router.Use(middleware.Recoverer)
+	// s.router.Use(middleware.URLFormat)
 
 	s.ConfigureRouter()
 
-	return http.ListenAndServe(address, s.router)
+	address := s.config.Address + ":" + s.config.Port
+	s.logger.Info("started api server at address ", address)
+	return s.router.Run(address)
 }
 
 func (s *ApiServer) ConfigureRouter() {
 
-	s.router.HandleFunc("/hello", s.handlerHello())
-	s.router.HandleFunc("/info", s.handlerInfo())
+	s.router.GET("/hello", s.handlerHello())
+	s.router.GET("/info", s.handlerInfo)
 }
