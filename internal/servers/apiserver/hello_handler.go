@@ -13,7 +13,7 @@ import (
 func (s ApiServer) handlerHello() gin.HandlerFunc {
 
 	return func(c *gin.Context) {
-		s.logger.Info("Hello ", c.Request.Method)
+		s.Logger.Info("Hello ", c.Request.Method)
 		c.JSON(http.StatusOK, gin.H{
 			"message": "Hello world!",
 		})

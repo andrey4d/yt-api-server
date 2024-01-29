@@ -5,20 +5,21 @@
 package apiserver
 
 import (
-	"github.com/sirupsen/logrus"
 	"net/http"
 	"time"
+
+	"github.com/sirupsen/logrus"
 
 	"github.com/go-chi/chi/v5/middleware"
 )
 
 func (s *ApiServer) SetLogger(logger *logrus.Logger) {
 	logger.Info("apiServer set main logger")
-	s.logger = logger
+	s.Logger = logger
 }
 
 func (s ApiServer) GetLogger() *logrus.Logger {
-	return s.logger
+	return s.Logger
 }
 
 func (s ApiServer) GetMwLogger(log *logrus.Logger) func(next http.Handler) http.Handler {

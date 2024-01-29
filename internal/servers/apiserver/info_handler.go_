@@ -1,0 +1,45 @@
+/*
+ *   Copyright (c) 2024 Andrey andrey4d.dev@gmail.com
+ *   All rights reserved.
+ */
+package apiserver
+
+import (
+	"net/http"
+
+	"github.com/gin-gonic/gin"
+	"github.com/kkdai/youtube/v2"
+)
+
+func (s *ApiServer) handlerInfo(c *gin.Context) {
+
+	url := c.PostForm("video_tag")
+	if url == "" {
+		s.Logger.Info("++ set default url")
+		url = "https://www.youtube.com/watch?v=3WsEDZRif6U"
+	}
+
+	_, err := s.getVideoInfo(url)
+	if err != nil {
+		s.Logger.Warn(err)
+		c.String(http.StatusInternalServerError, "%v", err)
+	}
+
+	s.Logger.Infof("++ handlerInfo %s %s\n", c.Request.Method, url)
+	// c.JSON(http.StatusOK, *videoInfo.Formats)
+
+	Formats := map[string][]youtube.Format{
+		"Formats": s.Video.Formats,
+	}
+	c.HTML(http.StatusOK, "index.html", Formats)
+
+}
+
+func (s *ApiServer) getVideoInfo(url string) (*youtube.Video, error) {
+	video, err := s.YtClient.GetVideo(url)
+	if err != nil {
+		return nil, err
+	}
+	s.Video = video
+	return video, nil
+}

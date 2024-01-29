@@ -24,16 +24,17 @@
             </div>
         </form>
     
-    <form class="video_tag" hx-post="/url/" hx-trigger="change">
-    <fieldset id="video-select">
-      <legend>Choose video tag</legend>
-        {{ range .Formats }}
+    
+    <form hx-post="/url/" hx-trigger="change" hx-include="[name='films']">
+        <fieldset id="video-select">
+            <legend>Choose video tag</legend>
+            {{ range .Formats }}
 
-        <input type="radio" id="{{ .Itag }}" name="films" value="{{ .Itag }}" />
-        <label for="{{ .Itag }}">{{ .Itag }} {{.Size}} {{.AudioChannels}} {{ .VideoQuality }} - {{ .MimeType }}</label><br>
+                <input type="radio" id="{{ .ItagNo }}" name="films" value="{{ .ItagNo }}" class="form-select"/>
+                <label for="{{ .ItagNo }}">{{ .ItagNo }} {{.AudioChannels}} {{ .Quality }} - {{ .MimeType }}</label><br>
 
-        {{ end }}
-    </fieldset>
+            {{ end }}
+        </fieldset>
   </form>
 
     </body>
