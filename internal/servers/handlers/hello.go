@@ -9,7 +9,7 @@ import (
 	"github.com/gofiber/fiber/v2"
 )
 
-func GetHello(logger *log.LogHandler) fiber.Handler {
+func GetHello(logger *log.LogHandl) fiber.Handler {
 	entry := logger.GetLogger().WithField("module", "GetHello()")
 	message := "Hello World!"
 

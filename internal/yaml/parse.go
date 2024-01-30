@@ -11,7 +11,7 @@ import (
 	"gopkg.in/yaml.v3"
 )
 
-func ParseFile(filename string, config interface{}, log *log.LogHandler) error {
+func ParseFile(filename string, config interface{}, log *log.LogHandl) error {
 
 	cfg_data, err := os.ReadFile(filename)
 	if err != nil {

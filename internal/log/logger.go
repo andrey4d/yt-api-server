@@ -8,23 +8,23 @@ import (
 	"github.com/sirupsen/logrus"
 )
 
-type LogHandler struct {
+type LogHandl struct {
 	Logger *logrus.Logger
 }
 
-func New() *LogHandler {
+func New() *LogHandl {
 	logger := logrus.New()
 	customFormatter := new(logrus.TextFormatter)
 	customFormatter.TimestampFormat = "2006-01-02 15:04:05"
 	logger.SetFormatter(customFormatter)
 	customFormatter.FullTimestamp = true
 
-	return &LogHandler{
+	return &LogHandl{
 		Logger: logger,
 	}
 }
 
-func (l *LogHandler) GetLogger() *logrus.Logger {
+func (l *LogHandl) GetLogger() *logrus.Logger {
 	if l.Logger != nil {
 		l.LogModuleInfo("log handler").Info("log reuse")
 		return l.Logger
@@ -32,7 +32,7 @@ func (l *LogHandler) GetLogger() *logrus.Logger {
 	return New().Logger
 }
 
-func (l *LogHandler) SetLogLevel(logLevel string) error {
+func (l *LogHandl) SetLogLevel(logLevel string) error {
 	level, err := logrus.ParseLevel(logLevel)
 	if err != nil {
 		return err
@@ -41,6 +41,6 @@ func (l *LogHandler) SetLogLevel(logLevel string) error {
 	return nil
 }
 
-func (l *LogHandler) LogModuleInfo(moduleName string) *logrus.Entry {
+func (l *LogHandl) LogModuleInfo(moduleName string) *logrus.Entry {
 	return l.Logger.WithField("module", moduleName)
 }

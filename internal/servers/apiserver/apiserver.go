@@ -21,7 +21,7 @@ type ApiServer struct {
 	config     *config.Config
 	app        fiber.App
 	client     *ytclient.Client
-	logHandler *log.LogHandler
+	logHandler *log.LogHandl
 }
 
 func New(config *config.Config) *ApiServer {
@@ -34,32 +34,19 @@ func New(config *config.Config) *ApiServer {
 		config:     config,
 		app:        *fiber.New(fiberConfig),
 		client:     ytclient.New(),
-		logHandler: &log.LogHandler{},
+		logHandler: &log.LogHandl{},
 	}
 }
 
 func (s *ApiServer) Start() error {
 
-	if s.logHandler.Logger == nil {
-		s.logHandler.Logger = logrus.New()
-		s.logHandler.LogModuleInfo("apiServer").Info("new logger by default")
-	}
-
-	s.app.Use(requestid.New())
-
-	s.app.Use(logger.New(logger.Config{
-		Format: "${time} | ${locals:requestid} | ${status} | ${latency} | ${ip} | ${method} | ${path} | ${query} | ${error}\n",
-	}))
-
-	// s.router.Use(Logger(s.Logger))
-	// s.router.Use(requestLoggingMiddleware(s.Logger))
-
-	// s.router.Use(middlware.RequestIDMiddleware)
-
+	s.defaultLogger()
+	s.ConfigureMiddleware()
 	s.ConfigureRouter()
 
 	address := s.config.Address + ":" + s.config.Port
 	s.logHandler.LogModuleInfo("start()").Info("started api server at address ", address)
+
 	return s.app.Listen(address)
 }
 
@@ -69,5 +56,18 @@ func (s *ApiServer) ConfigureRouter() {
 	s.app.Post("/info/", handlers.GetInfo(s.client))
 	s.app.Post("/url/", handlers.GetUrls(s.client))
 	s.app.Get("/about", handlers.GetAbout())
+}
 
+func (s *ApiServer) ConfigureMiddleware() {
+	s.app.Use(requestid.New())
+	s.app.Use(logger.New(logger.Config{
+		Format: "${time} | ${locals:requestid} | ${status} | ${latency} | ${ip} | ${method} | ${path} | ${query} | ${error}\n",
+	}))
+}
+
+func (s *ApiServer) defaultLogger() {
+	if s.logHandler.Logger == nil {
+		s.logHandler.Logger = logrus.New()
+		s.logHandler.LogModuleInfo("apiServer").Info("new logger by default")
+	}
 }
