@@ -2,7 +2,7 @@
  *   Copyright (c) 2024 Andrey andrey4d.dev@gmail.com
  *   All rights reserved.
  */
-package apiserver
+package handlers
 
 import (
 	"net/http"
