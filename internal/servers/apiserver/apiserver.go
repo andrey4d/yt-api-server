@@ -7,6 +7,7 @@ package apiserver
 import (
 	"github.com/andrey4d/ytapiserver/internal/config"
 	"github.com/andrey4d/ytapiserver/internal/servers/handlers"
+	"github.com/andrey4d/ytapiserver/internal/servers/middlware"
 	"github.com/andrey4d/ytapiserver/internal/ytclient"
 
 	"github.com/gin-gonic/gin"
@@ -24,7 +25,7 @@ func New(config *config.Config) *ApiServer {
 
 	return &ApiServer{
 		config: config,
-		router: gin.Default(),
+		router: gin.New(),
 		client: ytclient.New(),
 	}
 }
@@ -35,6 +36,11 @@ func (s *ApiServer) Start() error {
 		s.Logger = logrus.New()
 		s.Logger.Info("apiServer new default logger")
 	}
+
+	s.router.Use(Logger(s.Logger))
+	s.router.Use(requestLoggingMiddleware(s.Logger))
+
+	s.router.Use(middlware.RequestIDMiddleware)
 
 	s.router.LoadHTMLGlob("web/templates/*.html")
 

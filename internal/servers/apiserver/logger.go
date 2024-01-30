@@ -53,3 +53,13 @@ func (s ApiServer) GetMwLogger(log *logrus.Logger) func(next http.Handler) http.
 	}
 
 }
+
+// entry := log.WithFields(
+// 	logrus.Fields{
+// 		"method":      ctx.Request.Method,
+// 		"path":        ctx.Request.URL.Path,
+// 		"remote_addr": ctx.Request.RemoteAddr,
+// 		"user_agent":  ctx.Request.UserAgent(),
+// 		"request_id":  ctx.Request.Header.Values("X-Request-ID"),
+// 	},
+// )
