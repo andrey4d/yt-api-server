@@ -23,13 +23,13 @@ func init() {
 func main() {
 
 	flag.Parse()
-	logHandler := log.New()
-	logger := logHandler.Logger
-	logger.Info("config ", configPath)
+	LogHandler := log.New()
+	logger := LogHandler.Logger
+	logger.WithField("module", "apiServer").Info("config ", configPath)
 
 	config := config.NewConfig()
-	yaml.ParseFile(configPath, config)
-	logHandler.SetLogLevel(config.LogLevel)
+	yaml.ParseFile(configPath, config, LogHandler)
+	LogHandler.SetLogLevel(config.LogLevel)
 
 	apiServer := apiserver.New(config)
 	apiServer.SetLogger(logger)

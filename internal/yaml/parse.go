@@ -7,10 +7,11 @@ package yaml
 import (
 	"os"
 
+	"github.com/andrey4d/ytapiserver/internal/log"
 	"gopkg.in/yaml.v3"
 )
 
-func ParseFile(filename string, config interface{}) error {
+func ParseFile(filename string, config interface{}, log *log.LogHandler) error {
 
 	cfg_data, err := os.ReadFile(filename)
 	if err != nil {

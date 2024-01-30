@@ -10,6 +10,8 @@ import (
 	"github.com/andrey4d/ytapiserver/internal/ytclient"
 	"github.com/gofiber/fiber/v2"
 	"github.com/gofiber/fiber/v2/middleware/logger"
+	"github.com/gofiber/fiber/v2/middleware/requestid"
+
 	"github.com/gofiber/template/html/v2"
 	"github.com/sirupsen/logrus"
 )
@@ -40,7 +42,13 @@ func (s *ApiServer) Start() error {
 		s.Logger = logrus.New()
 		s.Logger.Info("apiServer new default logger")
 	}
-	s.app.Use(logger.New())
+
+	s.app.Use(requestid.New())
+	s.app.Use(logger.New(logger.Config{
+		// For more options, see the Config section
+
+		Format: "${time} | ${locals:requestid} | ${status} | ${latency} | ${ip} | ${method} | ${path} | ${query} | ${error}\n"}))
+
 	// s.router.Use(Logger(s.Logger))
 	// s.router.Use(requestLoggingMiddleware(s.Logger))
 
@@ -59,4 +67,5 @@ func (s *ApiServer) ConfigureRouter() {
 	s.app.Post("/info/", handlers.GetInfo(s.client))
 	s.app.Post("/url/", handlers.GetUrls(s.client))
 	s.app.Get("/about", handlers.GetAbout())
+
 }

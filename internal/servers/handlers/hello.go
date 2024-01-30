@@ -11,6 +11,8 @@ import (
 func GetHello() fiber.Handler {
 
 	return func(c *fiber.Ctx) error {
+		logger := c.App().Server().Logger
+		logger.Printf("ssssss")
 		return c.JSON(fiber.Map{
 			"message": "Hello world!",
 		})

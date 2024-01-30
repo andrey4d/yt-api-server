@@ -4,7 +4,9 @@
  */
 package log
 
-import "github.com/sirupsen/logrus"
+import (
+	"github.com/sirupsen/logrus"
+)
 
 type LogHandler struct {
 	Logger *logrus.Logger
@@ -13,15 +15,18 @@ type LogHandler struct {
 var logHandler LogHandler
 
 func New() *LogHandler {
+	logger := logrus.New()
+	entry := logger.WithFields(logrus.Fields{"module": "apiServer"})
+	_ = entry
 	return &LogHandler{
-		Logger: logrus.New(),
+		Logger: logger,
 	}
 }
 
-func GetLogger() *logrus.Logger {
-	if logHandler.Logger != nil {
+func (l *LogHandler) GetLogger() *logrus.Logger {
+	if l.Logger != nil {
 		logrus.Info("log reuse")
-		return logHandler.Logger
+		return l.Logger
 	}
 	return New().Logger
 }
