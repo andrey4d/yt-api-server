@@ -9,10 +9,7 @@ import (
 )
 
 func (s *ApiServer) SetLogger(logger *logrus.Logger) {
-	logger.Info("apiServer set main logger")
-	s.Logger = logger
-}
 
-func (s ApiServer) GetLogger() *logrus.Logger {
-	return s.Logger
+	s.logHandler.Logger = logger
+	s.logHandler.LogModuleInfo("apiServer").Info("set main logger")
 }

@@ -5,16 +5,20 @@
 package handlers
 
 import (
+	"github.com/andrey4d/ytapiserver/internal/log"
 	"github.com/gofiber/fiber/v2"
 )
 
-func GetHello() fiber.Handler {
+func GetHello(logger *log.LogHandler) fiber.Handler {
+	entry := logger.GetLogger().WithField("module", "GetHello()")
+	message := "Hello World!"
 
 	return func(c *fiber.Ctx) error {
-		logger := c.App().Server().Logger
-		logger.Printf("ssssss")
+		userAgent := c.GetReqHeaders()["User-Agent"]
+		entry.Info(c.OriginalURL(), " | ", userAgent)
+
 		return c.JSON(fiber.Map{
-			"message": "Hello world!",
+			"message": message,
 		})
 	}
 }

@@ -24,18 +24,18 @@ func main() {
 
 	flag.Parse()
 	LogHandler := log.New()
-	logger := LogHandler.Logger
-	logger.WithField("module", "apiServer").Info("config ", configPath)
+	LogHandler.LogModuleInfo("apiServer").Info("config ", configPath)
 
 	config := config.NewConfig()
 	yaml.ParseFile(configPath, config, LogHandler)
+
 	LogHandler.SetLogLevel(config.LogLevel)
 
 	apiServer := apiserver.New(config)
-	apiServer.SetLogger(logger)
+	apiServer.SetLogger(LogHandler.Logger)
 
 	if err := apiServer.Start(); err != nil {
-		logger.Fatal(err)
+		LogHandler.LogModuleInfo("apiServer").Fatal(err)
 	}
 
 }

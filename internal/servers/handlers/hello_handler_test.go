@@ -9,14 +9,13 @@ import (
 	"net/http/httptest"
 	"testing"
 
-	"github.com/andrey4d/ytapiserver/internal/config"
 	"github.com/stretchr/testify/assert"
 )
 
 func TestApiServer_handlerHello(t *testing.T) {
-	s := New(config.NewConfig())
+	// s := apiserver.New(config.NewConfig())
 	rec := httptest.NewRecorder()
 	req, _ := http.NewRequest(http.MethodGet, "/hello", nil)
-	s.handlerHello().ServeHTTP(rec, req)
-	assert.Equal(t, rec.Body.String(), "Hello world!")
+	GetHello().
+		assert.Equal(t, rec.Body.String(), "Hello world!")
 }
