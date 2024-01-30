@@ -46,7 +46,7 @@ func (s *ApiServer) Start() error {
 }
 
 func (s ApiServer) ConfigureRouter() {
-	s.router.GET("/hello", s.handlerHello())
+	s.router.GET("/hello", handlers.GetHello())
 	s.router.GET("/", handlers.HandlerIndex)
 	s.router.POST("/info/", handlers.GetInfo(s.client))
 	s.router.POST("/url/", handlers.GetUrls(s.client))
