@@ -5,20 +5,17 @@
 package handlers
 
 import (
-	"net/http"
-
-	"github.com/gin-gonic/gin"
+	"github.com/gofiber/fiber/v2"
 )
 
 type About struct {
 	msg string
 }
 
-func GetAbout() gin.HandlerFunc {
+func GetAbout() fiber.Handler {
 	about := About{msg: "About"}
-	return func(c *gin.Context) {
-
-		c.JSON(http.StatusOK, gin.H{"about": about.msg})
+	return func(c *fiber.Ctx) error {
+		return c.JSON(fiber.Map{"about": about.msg})
 	}
 
 }

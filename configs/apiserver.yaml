@@ -1,3 +1,5 @@
 address: "127.0.0.1"
 port: "8081"
 log_level: "debug"
+templates_dir: "web/templates"
+templates_type: ".html"

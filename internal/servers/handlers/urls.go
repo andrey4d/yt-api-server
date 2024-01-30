@@ -6,24 +6,23 @@ package handlers
 
 import (
 	"fmt"
-	"net/http"
 
 	"github.com/andrey4d/ytapiserver/internal/ytclient"
-	"github.com/gin-gonic/gin"
+	"github.com/gofiber/fiber/v2"
 )
 
-func GetUrls(c *ytclient.Client) gin.HandlerFunc {
+func GetUrls(c *ytclient.Client) fiber.Handler {
 
-	return func(ctx *gin.Context) {
-		tag := ctx.PostForm("films")
+	return func(ctx *fiber.Ctx) error {
+		tag := ctx.FormValue("films")
 
 		format, err := c.GetFormat(tag)
 		if err != nil {
-			ctx.String(http.StatusInternalServerError, "%v", err)
+			ctx.Status(fiber.StatusInternalServerError).SendString(fmt.Sprintf("%v", err))
 		}
 
 		link_text := fmt.Sprintf("Quality=%s, audio channels=%d, video=%s", format.QualityLabel, format.AudioChannels, format.MimeType)
 
-		ctx.String(http.StatusOK, "<a href='%s'>%s</a>", format.URL, link_text)
+		return ctx.SendString(fmt.Sprintf("<a href='%s'>%s</a>", format.URL, link_text))
 	}
 }

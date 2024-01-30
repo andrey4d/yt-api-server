@@ -5,12 +5,9 @@
 package handlers
 
 import (
-	"net/http"
-
-	"github.com/gin-gonic/gin"
+	"github.com/gofiber/fiber/v2"
 )
 
-func HandlerIndex(c *gin.Context) {
-
-	c.HTML(http.StatusOK, "index.html", nil)
+func HandlerIndex(c *fiber.Ctx) error {
+	return c.Render("index", nil)
 }

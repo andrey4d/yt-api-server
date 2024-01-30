@@ -5,29 +5,29 @@
 package handlers
 
 import (
-	"net/http"
+	"fmt"
 
 	"github.com/andrey4d/ytapiserver/internal/ytclient"
-	"github.com/gin-gonic/gin"
+	"github.com/gofiber/fiber/v2"
 	"github.com/kkdai/youtube/v2"
 )
 
-func GetInfo(c *ytclient.Client) gin.HandlerFunc {
+func GetInfo(c *ytclient.Client) fiber.Handler {
 
-	return func(ctx *gin.Context) {
-		url := ctx.PostForm("video_tag")
+	return func(ctx *fiber.Ctx) error {
+		url := ctx.FormValue("video_tag")
 		if url == "" {
 			url = "https://www.youtube.com/watch?v=3WsEDZRif6U"
 		}
 
 		_, err := c.GetVideoInfo(url)
 		if err != nil {
-			ctx.String(http.StatusInternalServerError, "%v", err)
+			ctx.Status(fiber.StatusInternalServerError).SendString(fmt.Sprintf("%v", err))
 		}
 		// c.JSON(http.StatusOK, *videoInfo.Formats)
 		Formats := map[string][]youtube.Format{
 			"Formats": c.Video.Formats,
 		}
-		ctx.HTML(http.StatusOK, "index.html", Formats)
+		return ctx.Render("index", Formats)
 	}
 }

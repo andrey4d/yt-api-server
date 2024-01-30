@@ -5,16 +5,13 @@
 package handlers
 
 import (
-	"net/http"
-
-	"github.com/gin-gonic/gin"
+	"github.com/gofiber/fiber/v2"
 )
 
-func GetHello() gin.HandlerFunc {
+func GetHello() fiber.Handler {
 
-	return func(c *gin.Context) {
-
-		c.JSON(http.StatusOK, gin.H{
+	return func(c *fiber.Ctx) error {
+		return c.JSON(fiber.Map{
 			"message": "Hello world!",
 		})
 	}
