@@ -1,0 +1,13 @@
+package components
+
+
+css foooterStyle(){
+    color: #ffd700;
+
+}
+
+templ Footer(email string){
+    <footer>
+        <a class={ foooterStyle() } href={ templ.URL( "mailto: " + email)  } >{email}</a>
+    </footer>
+}

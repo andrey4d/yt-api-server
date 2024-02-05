@@ -1,0 +1,15 @@
+package view
+
+import (
+	"github.com/andrey4d/ytapiserver/templ/layout"
+)
+
+
+templ About(messages []string, pageAttributes layout.BaseAttributes ){
+      @layout.Base(pageAttributes){
+        for _ , msg := range messages {
+             <div> { msg } </div>
+        }
+      }
+      
+}

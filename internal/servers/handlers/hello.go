@@ -6,6 +6,7 @@ package handlers
 
 import (
 	"github.com/andrey4d/ytapiserver/internal/log"
+	"github.com/andrey4d/ytapiserver/templ/view"
 	"github.com/gofiber/fiber/v2"
 )
 
@@ -16,9 +17,8 @@ func GetHello(logger *log.LogHandl) fiber.Handler {
 	return func(c *fiber.Ctx) error {
 		userAgent := c.GetReqHeaders()["User-Agent"]
 		entry.Info(c.OriginalURL(), " | ", userAgent)
-
-		return c.JSON(fiber.Map{
-			"message": message,
-		})
+		pageAttributes := *GetPageAttributes()
+		pageAttributes.PageTitle = "Hello page"
+		return Render(c, view.Hello(message, pageAttributes))
 	}
 }

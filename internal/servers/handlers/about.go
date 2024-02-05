@@ -5,17 +5,17 @@
 package handlers
 
 import (
+	"github.com/andrey4d/ytapiserver/templ/view"
 	"github.com/gofiber/fiber/v2"
 )
 
-type About struct {
-	msg string
-}
-
 func GetAbout() fiber.Handler {
-	about := About{msg: "About"}
+	about := []string{"Project for", "Download video", "From Youtube"}
+
 	return func(c *fiber.Ctx) error {
-		return c.JSON(fiber.Map{"about": about.msg})
+		pageAttributes := GetPageAttributes()
+		pageAttributes.PageTitle = "About this project."
+		return Render(c, view.About(about, *pageAttributes))
 	}
 
 }

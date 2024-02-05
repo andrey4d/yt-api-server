@@ -1,0 +1,38 @@
+/*
+ *   Copyright (c) 2024 Andrey andrey4d.dev@gmail.com
+ *   All rights reserved.
+ */
+package components
+
+type InputAttributes struct {
+	Text string
+	Type string
+	Name string
+	Id string
+	Class string
+	For string
+	Value string
+}
+
+css inputStyle() {
+	padding: 3px;
+}
+
+
+templ Input(attributes InputAttributes){
+	<div class={ inputStyle() }>
+		@Label(LabelAttributes{Text: attributes.Text, For: attributes.For})
+		<input type={attributes.Text} name={attributes.Name} id={attributes.Id} class={attributes.Class} />
+	</div>
+}
+
+func DefaultInputAttributes() InputAttributes {
+	return InputAttributes{
+		Text: "Default text",
+		Type: "text",
+		Class: "form-control",
+		Id: "",
+		Name: "",
+		For: "",
+	}
+}

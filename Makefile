@@ -17,13 +17,13 @@ BASE=$(shell pwd)
 BIN=$(BASE)/bin
 FILES=$(wildcard **/*.go)
 
+run: go-templ go-run
 
-build: go-build
+build: go-templ go-build
 
 clean: go-clean
 
-.PHONY: test
-test: go-test
+templ: go-templ
 
 ## go-build: build binary `go build` internally.
 go-build: 
@@ -36,7 +36,8 @@ go-clean:
 	rm -rf ./bin 
 	go clean
 
-## go-test: Run tests `go test` internally.
-go-test: 
-	@echo "  >  Run tests..."
-	go test -v ./...
+go-run:
+	@go run cmd/main.go
+
+go-templ:
+	@${HOME}/go/bin/templ generate 

@@ -1,0 +1,30 @@
+package layout
+
+import "github.com/andrey4d/ytapiserver/templ/components"
+
+type BaseAttributes struct {
+    BodyClass string
+    BodyId string
+    PageTitle string
+    AuthorEmail string
+}
+
+
+templ Base(baseAttributes BaseAttributes){
+<!DOCTYPE html>
+    @Head(baseAttributes.PageTitle)
+<html>
+     @components.Header(baseAttributes.PageTitle)
+    <body class={ baseAttributes.BodyClass } id={baseAttributes.BodyId}>
+        {children...}
+    </body>
+    @components.Footer(baseAttributes.AuthorEmail)
+</html>
+}
+
+func NewDefaultAttributes() BaseAttributes{
+    return BaseAttributes{
+        BodyClass: "comtainer", 
+        BodyId: "main-container",
+    }
+}

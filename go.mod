@@ -3,6 +3,7 @@ module github.com/andrey4d/ytapiserver
 go 1.21.6
 
 require (
+	github.com/a-h/templ v0.2.543
 	github.com/gofiber/fiber/v2 v2.52.0
 	github.com/gofiber/template/html/v2 v2.1.0
 	github.com/kkdai/youtube/v2 v2.10.0

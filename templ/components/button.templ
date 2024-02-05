@@ -1,0 +1,27 @@
+package components
+
+type ButtonAttributes struct {
+    Type string
+    Calass string
+    Text string
+}
+
+css buttonStyle() {
+	padding: 3px;
+}
+
+templ Button(attributes ButtonAttributes){
+    <div class={ buttonStyle() } >
+        <button type={ attributes.Type } class={ attributes.Calass } >
+           { attributes.Text }
+        </button>
+    </div>
+}
+
+func DefaultButtonAttributes() ButtonAttributes{
+    return ButtonAttributes{
+        Type: "submit",
+        Calass: "btn btn-primary",
+        Text: "Submit",
+    }
+}

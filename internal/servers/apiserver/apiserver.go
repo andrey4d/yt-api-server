@@ -52,7 +52,7 @@ func (s *ApiServer) Start() error {
 
 func (s *ApiServer) ConfigureRouter() {
 	s.app.Get("/hello", handlers.GetHello(s.logHandler))
-	s.app.Get("/", handlers.HandlerIndex)
+	s.app.Get("/", handlers.GetIndex(s.client))
 	s.app.Post("/info/", handlers.GetInfo(s.client))
 	s.app.Post("/url/", handlers.GetUrls(s.client))
 	s.app.Get("/about", handlers.GetAbout())

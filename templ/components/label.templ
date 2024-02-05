@@ -1,0 +1,21 @@
+package components
+
+type LabelAttributes struct {
+    Text string
+    Name string
+    For string
+}
+
+css labelPadding() {
+	padding: 3px;
+}
+
+templ Label(attributes LabelAttributes){
+		<label for={attributes.For} class={ labelPadding() }>{attributes.Text}</label>
+}
+
+func DefaultLabelAttributes() LabelAttributes{
+    return LabelAttributes{
+        Text: "Label",
+    }
+}
