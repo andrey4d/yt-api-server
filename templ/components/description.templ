@@ -1,0 +1,31 @@
+package components
+
+import (
+    "strings"
+)
+
+type DescriptionAttributes struct {
+    Author string
+    Description string
+}
+
+templ Description(attributes DescriptionAttributes) {
+    <h1>Author: { attributes.Author } </h1>
+    <p>Description:</p>
+        <details>
+            <summary> 
+                <ul>
+                    for _, describ_item := range SplitDescription(attributes.Description){
+                    <li>{describ_item}</li>
+                    }
+                </ul>
+                
+            </summary>
+        </details>
+}
+
+func SplitDescription(description string) []string{
+    return strings.Split(description, "\n")
+}
+
+		

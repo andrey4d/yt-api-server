@@ -4,6 +4,7 @@
  */
 package components
 
+
 type InputAttributes struct {
 	Text string
 	Type string
@@ -12,6 +13,7 @@ type InputAttributes struct {
 	Class string
 	For string
 	Value string
+	Placeholder string
 }
 
 css inputStyle() {
@@ -19,11 +21,18 @@ css inputStyle() {
 }
 
 
+css AlignLeftInput(){
+	align: left;
+}
+
 templ Input(attributes InputAttributes){
-	<div class={ inputStyle() }>
-		@Label(LabelAttributes{Text: attributes.Text, For: attributes.For})
-		<input type={attributes.Text} name={attributes.Name} id={attributes.Id} class={attributes.Class} />
-	</div>
+		<input type={attributes.Type} 
+		       name={attributes.Name} 
+			   id={attributes.Id} 
+			   class={attributes.Class, inputStyle()} 
+			   value={attributes.Value} 
+			   placeholder={attributes.Placeholder}/>
+
 }
 
 func DefaultInputAttributes() InputAttributes {
@@ -34,5 +43,6 @@ func DefaultInputAttributes() InputAttributes {
 		Id: "",
 		Name: "",
 		For: "",
+		Placeholder: "enter text",
 	}
 }

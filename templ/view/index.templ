@@ -5,18 +5,47 @@ import (
 	"github.com/andrey4d/ytapiserver/templ/components"
 	"github.com/andrey4d/ytapiserver/templ/forms"
   "github.com/andrey4d/ytapiserver/internal/ytclient"
+
+	"strconv"
+
 )
+
+css padding(){
+  padding: 3px;
+}
 
 templ Index(client *ytclient.Client, pageAttributes layout.BaseAttributes){
   @layout.Base(pageAttributes){
-    @forms.InfoForm(forms.DefaultInfoFormAttributes()){
-      @components.Input(components.DefaultInputAttributes())
-      @components.Button(components.DefaultButtonAttributes())
+    @forms.Form(forms.DefaultInfoFormAttributes()){
+      @components.Description(components.DescriptionAttributes{
+      Author: client.Video.Author,
+      Description: client.Video.Description,
+    })
     }
-    @forms.UrlForm(forms.DefaultUrlFormAttributes()){
+    @forms.UrlForm(forms.FormAttributes{
+            HxPost: "/url/",
+            HxTrigger: "",
+            HxInclude: "[name='films']",
+    }){
                 for _, format  := range client.Video.Formats {
-                logrus.Info(format)
-                  <label>{format.URL} </label><br/>
+                  <div class={padding()}>
+                  @components.Input(components.InputAttributes{
+                          Type: "checkbox",
+                          Class: "form-select",
+                          Id: strconv.Itoa(format.ItagNo),
+                          Name: "films",
+                          Value: strconv.Itoa(format.ItagNo),
+                        })
+                  @components.Label(components.LabelAttributes{
+                    For: strconv.Itoa(format.ItagNo) ,
+                    Text: format.QualityLabel + " " + format.AudioQuality + " " + strconv.Itoa(format.AudioChannels),
+                  })
+                  @components.Link(components.LinkAttributes{
+                    Url: format.URL,
+                    Text: format.MimeType,
+                    Name: "video_link",
+                  })
+                  </div>
                 }
     }
   }

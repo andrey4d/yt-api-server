@@ -1,0 +1,16 @@
+package forms
+
+type FormAttributes struct{
+    HxPost string
+    HxTraget string
+    HxInclude string
+    HxTrigger string
+    Class string
+}
+
+
+templ Form(attributes FormAttributes) {
+    <form  class={attributes.Class} >
+    {children...}
+    </form> 
+}

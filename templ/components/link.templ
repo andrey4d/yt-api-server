@@ -1,0 +1,26 @@
+package components
+
+type LinkAttributes struct {
+    Text string
+    Name string
+    Url string
+    Download string
+    Title string
+}
+
+css linkPadding() {
+	padding: 3px;
+}
+
+templ Link(attributes LinkAttributes){
+		<a href={templ.SafeURL(attributes.Url)} name={attributes.Name} class={linkPadding() } >{attributes.Text}</a>
+}
+
+func DefaultLinkAttributes() LinkAttributes{
+    return LinkAttributes{
+        Text: "Link",
+        Url: "www.google.com",
+        Name: "",
+
+    }
+}

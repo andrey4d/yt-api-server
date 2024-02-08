@@ -2,12 +2,16 @@ package components
 
 
 css foooterStyle(){
-    color: #ffd700;
+    color: #ffd700; 
+    text-align: center; 
+    padding: 3px; 
+    background-color: #0047ab; 
+    color: white;
 
 }
 
 templ Footer(email string){
-    <footer>
-        <a class={ foooterStyle() } href={ templ.URL( "mailto: " + email)  } >{email}</a>
+    <footer class={ foooterStyle() } >
+        <a style="color: #ffd700;" href={ templ.URL( "mailto: " + email)  } >{email}</a>
     </footer>
 }

@@ -17,7 +17,7 @@ func GetPageAttributes() *layout.BaseAttributes {
 		PageAttributes = &layout.BaseAttributes{
 			BodyClass:   "container",
 			BodyId:      "main-container",
-			AuthorEmail: "andrey4d@gmail.com",
+			AuthorEmail: "andrey4d.dev@gmail.com",
 		}
 
 		logger.LogModuleInfo("page_attributes").Info("new attributes")

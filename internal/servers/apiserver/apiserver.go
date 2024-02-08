@@ -5,6 +5,8 @@
 package apiserver
 
 import (
+	"os"
+
 	"github.com/andrey4d/ytapiserver/internal/config"
 	"github.com/andrey4d/ytapiserver/internal/log"
 	"github.com/andrey4d/ytapiserver/internal/servers/handlers"
@@ -43,6 +45,7 @@ func (s *ApiServer) Start() error {
 	s.defaultLogger()
 	s.ConfigureMiddleware()
 	s.ConfigureRouter()
+	s.StaticResources()
 
 	address := s.config.Address + ":" + s.config.Port
 	s.logHandler.LogModuleInfo("start()").Info("started api server at address ", address)
@@ -56,6 +59,7 @@ func (s *ApiServer) ConfigureRouter() {
 	s.app.Post("/info/", handlers.GetInfo(s.client))
 	s.app.Post("/url/", handlers.GetUrls(s.client))
 	s.app.Get("/about", handlers.GetAbout())
+
 }
 
 func (s *ApiServer) ConfigureMiddleware() {
@@ -70,4 +74,12 @@ func (s *ApiServer) defaultLogger() {
 		s.logHandler.Logger = logrus.New()
 		s.logHandler.LogModuleInfo("apiServer").Info("new logger by default")
 	}
+}
+
+func (s *ApiServer) StaticResources() {
+	resources_path, err := os.Getwd()
+	if err != nil {
+		s.logHandler.Logger.Fatal(err)
+	}
+	s.app.Static("/static", resources_path+"/web/static")
 }

@@ -11,11 +11,9 @@ css buttonStyle() {
 }
 
 templ Button(attributes ButtonAttributes){
-    <div class={ buttonStyle() } >
-        <button type={ attributes.Type } class={ attributes.Calass } >
+        <button type={ attributes.Type } class={ attributes.Calass, buttonStyle() } >
            { attributes.Text }
         </button>
-    </div>
 }
 
 func DefaultButtonAttributes() ButtonAttributes{

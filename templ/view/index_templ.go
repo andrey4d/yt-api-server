@@ -9,13 +9,26 @@ import "github.com/a-h/templ"
 import "context"
 import "io"
 import "bytes"
+import "strings"
 
 import (
 	"github.com/andrey4d/ytapiserver/internal/ytclient"
 	"github.com/andrey4d/ytapiserver/templ/components"
 	"github.com/andrey4d/ytapiserver/templ/forms"
 	"github.com/andrey4d/ytapiserver/templ/layout"
+
+	"strconv"
 )
+
+func padding() templ.CSSClass {
+	var templ_7745c5c3_CSSBuilder strings.Builder
+	templ_7745c5c3_CSSBuilder.WriteString(`padding:3px;`)
+	templ_7745c5c3_CSSID := templ.CSSID(`padding`, templ_7745c5c3_CSSBuilder.String())
+	return templ.ComponentCSSClass{
+		ID:    templ_7745c5c3_CSSID,
+		Class: templ.SafeCSS(`.` + templ_7745c5c3_CSSID + `{` + templ_7745c5c3_CSSBuilder.String() + `}`),
+	}
+}
 
 func Index(client *ytclient.Client, pageAttributes layout.BaseAttributes) templ.Component {
 	return templ.ComponentFunc(func(ctx context.Context, templ_7745c5c3_W io.Writer) (templ_7745c5c3_Err error) {
@@ -42,15 +55,10 @@ func Index(client *ytclient.Client, pageAttributes layout.BaseAttributes) templ.
 					templ_7745c5c3_Buffer = templ.GetBuffer()
 					defer templ.ReleaseBuffer(templ_7745c5c3_Buffer)
 				}
-				templ_7745c5c3_Err = components.Input(components.DefaultInputAttributes()).Render(ctx, templ_7745c5c3_Buffer)
-				if templ_7745c5c3_Err != nil {
-					return templ_7745c5c3_Err
-				}
-				_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(" ")
-				if templ_7745c5c3_Err != nil {
-					return templ_7745c5c3_Err
-				}
-				templ_7745c5c3_Err = components.Button(components.DefaultButtonAttributes()).Render(ctx, templ_7745c5c3_Buffer)
+				templ_7745c5c3_Err = components.Description(components.DescriptionAttributes{
+					Author:      client.Video.Author,
+					Description: client.Video.Description,
+				}).Render(ctx, templ_7745c5c3_Buffer)
 				if templ_7745c5c3_Err != nil {
 					return templ_7745c5c3_Err
 				}
@@ -59,7 +67,7 @@ func Index(client *ytclient.Client, pageAttributes layout.BaseAttributes) templ.
 				}
 				return templ_7745c5c3_Err
 			})
-			templ_7745c5c3_Err = forms.InfoForm(forms.DefaultInfoFormAttributes()).Render(templ.WithChildren(ctx, templ_7745c5c3_Var3), templ_7745c5c3_Buffer)
+			templ_7745c5c3_Err = forms.Form(forms.DefaultInfoFormAttributes()).Render(templ.WithChildren(ctx, templ_7745c5c3_Var3), templ_7745c5c3_Buffer)
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
@@ -74,20 +82,49 @@ func Index(client *ytclient.Client, pageAttributes layout.BaseAttributes) templ.
 					defer templ.ReleaseBuffer(templ_7745c5c3_Buffer)
 				}
 				for _, format := range client.Video.Formats {
-					_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("logrus.Info(format) <label>")
+					var templ_7745c5c3_Var5 = []any{padding()}
+					templ_7745c5c3_Err = templ.RenderCSSItems(ctx, templ_7745c5c3_Buffer, templ_7745c5c3_Var5...)
 					if templ_7745c5c3_Err != nil {
 						return templ_7745c5c3_Err
 					}
-					var templ_7745c5c3_Var5 string
-					templ_7745c5c3_Var5, templ_7745c5c3_Err = templ.JoinStringErrs(format.URL)
-					if templ_7745c5c3_Err != nil {
-						return templ.Error{Err: templ_7745c5c3_Err, FileName: `templ/view/index.templ`, Line: 18, Col: 36}
-					}
-					_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var5))
+					_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<div class=\"")
 					if templ_7745c5c3_Err != nil {
 						return templ_7745c5c3_Err
 					}
-					_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("</label><br>")
+					_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ.CSSClasses(templ_7745c5c3_Var5).String()))
+					if templ_7745c5c3_Err != nil {
+						return templ_7745c5c3_Err
+					}
+					_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("\">")
+					if templ_7745c5c3_Err != nil {
+						return templ_7745c5c3_Err
+					}
+					templ_7745c5c3_Err = components.Input(components.InputAttributes{
+						Type:  "checkbox",
+						Class: "form-select",
+						Id:    strconv.Itoa(format.ItagNo),
+						Name:  "films",
+						Value: strconv.Itoa(format.ItagNo),
+					}).Render(ctx, templ_7745c5c3_Buffer)
+					if templ_7745c5c3_Err != nil {
+						return templ_7745c5c3_Err
+					}
+					templ_7745c5c3_Err = components.Label(components.LabelAttributes{
+						For:  strconv.Itoa(format.ItagNo),
+						Text: format.QualityLabel + " " + format.AudioQuality + " " + strconv.Itoa(format.AudioChannels),
+					}).Render(ctx, templ_7745c5c3_Buffer)
+					if templ_7745c5c3_Err != nil {
+						return templ_7745c5c3_Err
+					}
+					templ_7745c5c3_Err = components.Link(components.LinkAttributes{
+						Url:  format.URL,
+						Text: format.MimeType,
+						Name: "video_link",
+					}).Render(ctx, templ_7745c5c3_Buffer)
+					if templ_7745c5c3_Err != nil {
+						return templ_7745c5c3_Err
+					}
+					_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("</div>")
 					if templ_7745c5c3_Err != nil {
 						return templ_7745c5c3_Err
 					}
@@ -97,7 +134,11 @@ func Index(client *ytclient.Client, pageAttributes layout.BaseAttributes) templ.
 				}
 				return templ_7745c5c3_Err
 			})
-			templ_7745c5c3_Err = forms.UrlForm(forms.DefaultUrlFormAttributes()).Render(templ.WithChildren(ctx, templ_7745c5c3_Var4), templ_7745c5c3_Buffer)
+			templ_7745c5c3_Err = forms.UrlForm(forms.FormAttributes{
+				HxPost:    "/url/",
+				HxTrigger: "",
+				HxInclude: "[name='films']",
+			}).Render(templ.WithChildren(ctx, templ_7745c5c3_Var4), templ_7745c5c3_Buffer)
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}

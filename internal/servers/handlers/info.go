@@ -19,6 +19,7 @@ func GetInfo(c *ytclient.Client) fiber.Handler {
 	pageAttributes.PageTitle = "Main page"
 
 	return func(ctx *fiber.Ctx) error {
+
 		url := ctx.FormValue("video_tag")
 		if url == "" {
 			url = "https://www.youtube.com/watch?v=3WsEDZRif6U"
@@ -26,9 +27,9 @@ func GetInfo(c *ytclient.Client) fiber.Handler {
 
 		_, err := c.GetVideoInfo(url)
 		if err != nil {
-
 			ctx.Status(fiber.StatusInternalServerError).SendString(fmt.Sprintf("%v", err))
 		}
+
 		pageAttributes.PageTitle = c.Video.Title
 		// c.JSON(http.StatusOK, *videoInfo.Formats)
 		// Formats := map[string][]youtube.Format{
