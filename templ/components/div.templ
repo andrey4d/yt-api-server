@@ -1,0 +1,13 @@
+package components
+
+type DivAttributes struct {
+    Class string
+}
+
+
+templ Div(attributes DivAttributes){
+    <div class={attributes.Class}>
+        {children...}
+    </div>
+
+}

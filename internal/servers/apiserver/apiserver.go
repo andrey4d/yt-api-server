@@ -59,6 +59,7 @@ func (s *ApiServer) ConfigureRouter() {
 	s.app.Post("/info/", handlers.GetInfo(s.client))
 	s.app.Post("/url/", handlers.GetUrls(s.client))
 	s.app.Get("/about", handlers.GetAbout())
+	s.app.Get("/description", handlers.GetDescription(s.client))
 
 }
 

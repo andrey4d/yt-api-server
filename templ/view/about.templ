@@ -2,14 +2,42 @@ package view
 
 import (
 	"github.com/andrey4d/ytapiserver/templ/layout"
+  "github.com/andrey4d/ytapiserver/templ/components"
 )
+
+func getItems(messages []string) []components.ListGroupItemAttributes{
+  items := []components.ListGroupItemAttributes{}
+          for _ , msg := range messages {
+            items = append(items, components.ListGroupItemAttributes{
+              Class: "list-group-item",
+              Text: msg})
+
+        }
+  return items
+}
 
 
 templ About(messages []string, pageAttributes layout.BaseAttributes ){
+      
       @layout.Base(pageAttributes){
-        for _ , msg := range messages {
-             <div> { msg } </div>
+        @components.Div(components.DivAttributes{Class: "container"}){
+          @components.Div(components.DivAttributes{Class: "col-md-4 col-xxl-4 ms-3"}){
+            @components.ListGroup(components.ListGroupAttributes{
+                                Class: "list-group",
+                                Items: getItems(messages),
+                                }){ 
+                                    @components.ListGroupItem(components.ListGroupItemAttributes{
+                                      Class: "list-group-item active",
+                                    }){
+                                      @components.Input(components.DefaultInputAttributes())
+                                    }
+                                  }
+ 
+          }
+
+          
         }
       }
+        
       
 }

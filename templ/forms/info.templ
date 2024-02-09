@@ -1,7 +1,7 @@
 package forms
 
 templ InfoForm(attributes FormAttributes){
-        <form  hx-post={ attributes.HxPost } hx-target={ attributes.HxTraget } >
+        <form class={attributes.Class} hx-post={attributes.HxPost} hx-target={attributes.HxTraget} >
         {children...}
         </form> 
 }

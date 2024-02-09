@@ -1,6 +1,7 @@
 package components
 
 type LinkAttributes struct {
+    Class string
     Text string
     Name string
     Url string
@@ -13,7 +14,7 @@ css linkPadding() {
 }
 
 templ Link(attributes LinkAttributes){
-		<a href={templ.SafeURL(attributes.Url)} name={attributes.Name} class={linkPadding() } >{attributes.Text}</a>
+		<a href={templ.SafeURL(attributes.Url)} name={attributes.Name} class={attributes.Class} >{attributes.Text}</a>
 }
 
 func DefaultLinkAttributes() LinkAttributes{

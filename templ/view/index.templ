@@ -16,12 +16,13 @@ css padding(){
 
 templ Index(client *ytclient.Client, pageAttributes layout.BaseAttributes){
   @layout.Base(pageAttributes){
-    @forms.Form(forms.DefaultInfoFormAttributes()){
+    
       @components.Description(components.DescriptionAttributes{
-      Author: client.Video.Author,
-      Description: client.Video.Description,
-    })
-    }
+                              Author: client.Video.Author,
+                              Description: client.Video.Description,
+      })
+
+
     @forms.UrlForm(forms.FormAttributes{
             HxPost: "/url/",
             HxTrigger: "",

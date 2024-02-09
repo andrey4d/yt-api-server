@@ -1,0 +1,36 @@
+package components
+
+type ListGroupAttributes struct {
+    Class string
+    Text string
+    Items []ListGroupItemAttributes
+}
+
+type ListGroupItemAttributes struct {
+    Class string
+    Text string
+}
+
+templ ListGroup(attributes ListGroupAttributes){
+    <ul class={attributes.Class}>
+        for _, item := range(attributes.Items){
+            @ListGroupItem(item)
+        }
+        {children...}
+    </ul>
+}
+
+templ ListGroupItem(attributes ListGroupItemAttributes){
+    <li class={attributes.Class}>
+    {attributes.Text}
+    {children...}
+    </li>
+}
+
+func DefaultListGroupAttributes() ListGroupAttributes{
+    return ListGroupAttributes{
+        Class: "list-group",
+        Text: "",
+        Items: []ListGroupItemAttributes{},
+    }
+}

@@ -2,7 +2,7 @@ package forms
 
 templ UrlForm(attributes FormAttributes){
 
-        <form  hx-post={attributes.HxPost} hx-trigger={attributes.HxTrigger} hx-include={attributes.HxInclude} >
+        <form class={attributes.Class} hx-post={attributes.HxPost} hx-trigger={attributes.HxTrigger} hx-include={attributes.HxInclude} >
             <fieldset id="video-select">
             <legend>Choose video tag</legend>
                {children...} 

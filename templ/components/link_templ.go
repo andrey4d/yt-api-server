@@ -12,6 +12,7 @@ import "bytes"
 import "strings"
 
 type LinkAttributes struct {
+	Class    string
 	Text     string
 	Name     string
 	Url      string
@@ -42,7 +43,7 @@ func Link(attributes LinkAttributes) templ.Component {
 			templ_7745c5c3_Var1 = templ.NopComponent
 		}
 		ctx = templ.ClearChildren(ctx)
-		var templ_7745c5c3_Var2 = []any{linkPadding()}
+		var templ_7745c5c3_Var2 = []any{attributes.Class}
 		templ_7745c5c3_Err = templ.RenderCSSItems(ctx, templ_7745c5c3_Buffer, templ_7745c5c3_Var2...)
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
@@ -79,7 +80,7 @@ func Link(attributes LinkAttributes) templ.Component {
 		var templ_7745c5c3_Var4 string
 		templ_7745c5c3_Var4, templ_7745c5c3_Err = templ.JoinStringErrs(attributes.Text)
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `templ/components/link.templ`, Line: 15, Col: 105}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `templ/components/link.templ`, Line: 16, Col: 107}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var4))
 		if templ_7745c5c3_Err != nil {

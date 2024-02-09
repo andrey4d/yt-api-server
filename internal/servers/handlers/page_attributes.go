@@ -15,7 +15,7 @@ func GetPageAttributes() *layout.BaseAttributes {
 	logger := log.New()
 	if PageAttributes == nil {
 		PageAttributes = &layout.BaseAttributes{
-			BodyClass:   "container",
+			// BodyClass:   "container-fulid",
 			BodyId:      "main-container",
 			AuthorEmail: "andrey4d.dev@gmail.com",
 		}
