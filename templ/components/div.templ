@@ -2,11 +2,13 @@ package components
 
 type DivAttributes struct {
     Class string
+    Name string
+    Id string
 }
 
 
 templ Div(attributes DivAttributes){
-    <div class={attributes.Class}>
+    <div class={attributes.Class} name={attributes.Name} id={attributes.Id}>
         {children...}
     </div>
 

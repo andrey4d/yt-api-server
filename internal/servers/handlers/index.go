@@ -10,8 +10,10 @@ import (
 	"github.com/gofiber/fiber/v2"
 )
 
-func GetIndex(client *ytclient.Client) fiber.Handler {
+type IndexHandler struct {
+}
 
+func (h *IndexHandler) GetIndex(client *ytclient.Client) fiber.Handler {
 	return func(ctx *fiber.Ctx) error {
 		pageAttributes := GetPageAttributes()
 		pageAttributes.PageTitle = "Youtube get video URLs."

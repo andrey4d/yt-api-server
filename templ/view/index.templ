@@ -7,12 +7,21 @@ import (
   "github.com/andrey4d/ytapiserver/internal/ytclient"
 
 	"strconv"
-
+  "github.com/kkdai/youtube/v2"
+	// "github.com/sirupsen/logrus"
 )
 
 css padding(){
   padding: 3px;
 }
+
+css divider(){
+        width: 100%;
+        height: 3rem;
+      }
+
+
+
 
 templ Index(client *ytclient.Client, pageAttributes layout.BaseAttributes){
   @layout.Base(pageAttributes){
@@ -28,28 +37,83 @@ templ Index(client *ytclient.Client, pageAttributes layout.BaseAttributes){
             HxTrigger: "",
             HxInclude: "[name='films']",
     }){
-                for _, format  := range client.Video.Formats {
-                  <div class={padding()}>
-                  @components.Input(components.InputAttributes{
-                          Type: "checkbox",
-                          Class: "form-select",
-                          Id: strconv.Itoa(format.ItagNo),
-                          Name: "films",
-                          Value: strconv.Itoa(format.ItagNo),
-                        })
-                  @components.Label(components.LabelAttributes{
-                    For: strconv.Itoa(format.ItagNo) ,
-                    Text: format.QualityLabel + " " + format.AudioQuality + " " + strconv.Itoa(format.AudioChannels),
-                  })
-                  @components.Link(components.LinkAttributes{
-                    Url: format.URL,
-                    Text: format.MimeType,
-                    Name: "video_link",
-                  })
-                  </div>
-                }
-    }
-  }
+         @components.Div(components.DivAttributes{Class: "container text-center"}){
+            @components.Div(components.DivAttributes{Class: "row"}){
 
+                @listColumn("VideoAudio", *client.GetVideoAudioFormatsOnly(), components.InputAttributes{Class: "btn btn-primary mt-0", Type: "button"})
+            }
+            @components.Div(components.DivAttributes{Class: "row"}){
+              <div class={ divider() }/> 
+            }
+            @components.Div(components.DivAttributes{Class: "row"}){
+                @listColumn("Video", *client.GetVideoFormatsOnly(), components.InputAttributes{Class: "form-check-input mt-0", Type: "radio"})
+                @listColumn("Audio", *client.GetAudioFormatsOnly(), components.InputAttributes{Class: "form-check-input mt-0", Type: "radio"})
+            }
+        }
+      }
+  }
 }
+
+
+
+
+templ listColumn(title string, items []youtube.Format, attributes components.InputAttributes){
+    @components.Div(components.DivAttributes{Class: "col"}){
+        @components.Div(components.DivAttributes{Class: "card card-body"}){
+            @components.ListGroup(components.DefaultListGroupAttributes()){
+                @components.ListGroupItem(components.ListGroupItemAttributes{Class: "list-group-item active" }){ {title} }
+                    for _, format := range(items) {
+                      @columnItem(title, format, attributes)
+                    }
+              }
+          }
+      }
+}
+
+templ columnItem(title string, format youtube.Format, attributes components.InputAttributes){
+    @components.ListGroupItem(components.DefaultListGroupItemAttributes()){
+      @components.Div(components.DivAttributes{Class: "input-group-text"}){
+        @components.Input(components.InputAttributes{
+          Type: attributes.Type,
+          Class: attributes.Class,
+          Id: strconv.Itoa(format.ItagNo),
+          Name: title,
+          Value: strconv.Itoa(format.ItagNo),
+         })
+        @components.Label(components.LabelAttributes{
+            For: strconv.Itoa(format.ItagNo) ,
+            Text: format.QualityLabel + " " + format.AudioQuality + " " + strconv.Itoa(format.AudioChannels),
+        })
+        @components.Link(components.LinkAttributes{
+            Url: format.URL,
+            Text: format.MimeType,
+            Name: "video_link",
+        })
+      }
+    }
+}
+
+
+
+    //             for _, format  := range client.Video.Formats {
+    //               <div class={padding()}>
+    //               @components.Input(components.InputAttributes{
+    //                       Type: "checkbox",
+    //                       Class: "form-select",
+    //                       Id: strconv.Itoa(format.ItagNo),
+    //                       Name: "films",
+    //                       Value: strconv.Itoa(format.ItagNo),
+    //                     })
+    //               @components.Label(components.LabelAttributes{
+    //                 For: strconv.Itoa(format.ItagNo) ,
+    //                 Text: format.QualityLabel + " " + format.AudioQuality + " " + strconv.Itoa(format.AudioChannels),
+    //               })
+    //               @components.Link(components.LinkAttributes{
+    //                 Url: format.URL,
+    //                 Text: format.MimeType,
+    //                 Name: "video_link",
+    //               })
+    //               </div>
+    //             }
+    // }
 

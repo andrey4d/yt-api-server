@@ -13,11 +13,15 @@ import "bytes"
 type ListGroupAttributes struct {
 	Class string
 	Text  string
+	Name  string
+	Id    string
 	Items []ListGroupItemAttributes
 }
 
 type ListGroupItemAttributes struct {
 	Class string
+	Name  string
+	Id    string
 	Text  string
 }
 
@@ -44,6 +48,22 @@ func ListGroup(attributes ListGroupAttributes) templ.Component {
 			return templ_7745c5c3_Err
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ.CSSClasses(templ_7745c5c3_Var2).String()))
+		if templ_7745c5c3_Err != nil {
+			return templ_7745c5c3_Err
+		}
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("\" name=\"")
+		if templ_7745c5c3_Err != nil {
+			return templ_7745c5c3_Err
+		}
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(attributes.Name))
+		if templ_7745c5c3_Err != nil {
+			return templ_7745c5c3_Err
+		}
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("\" id=\"")
+		if templ_7745c5c3_Err != nil {
+			return templ_7745c5c3_Err
+		}
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(attributes.Id))
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
@@ -105,7 +125,7 @@ func ListGroupItem(attributes ListGroupItemAttributes) templ.Component {
 		var templ_7745c5c3_Var5 string
 		templ_7745c5c3_Var5, templ_7745c5c3_Err = templ.JoinStringErrs(attributes.Text)
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `templ/components/list_group.templ`, Line: 24, Col: 20}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `templ/components/list_group.templ`, Line: 28, Col: 20}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var5))
 		if templ_7745c5c3_Err != nil {
@@ -132,4 +152,8 @@ func DefaultListGroupAttributes() ListGroupAttributes {
 		Text:  "",
 		Items: []ListGroupItemAttributes{},
 	}
+}
+
+func DefaultListGroupItemAttributes() ListGroupItemAttributes {
+	return ListGroupItemAttributes{Class: "list-group-item"}
 }

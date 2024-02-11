@@ -3,16 +3,20 @@ package components
 type ListGroupAttributes struct {
     Class string
     Text string
+    Name string
+    Id string
     Items []ListGroupItemAttributes
 }
 
 type ListGroupItemAttributes struct {
     Class string
+    Name string
+    Id string
     Text string
 }
 
 templ ListGroup(attributes ListGroupAttributes){
-    <ul class={attributes.Class}>
+    <ul class={attributes.Class} name={attributes.Name} id={attributes.Id}>
         for _, item := range(attributes.Items){
             @ListGroupItem(item)
         }
@@ -33,4 +37,8 @@ func DefaultListGroupAttributes() ListGroupAttributes{
         Text: "",
         Items: []ListGroupItemAttributes{},
     }
+}
+
+func DefaultListGroupItemAttributes() ListGroupItemAttributes{
+    return ListGroupItemAttributes{Class: "list-group-item"}
 }
