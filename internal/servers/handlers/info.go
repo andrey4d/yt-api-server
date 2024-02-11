@@ -9,34 +9,30 @@ import (
 
 	"github.com/andrey4d/ytapiserver/internal/ytclient"
 	// "github.com/andrey4d/ytapiserver/templ/forms"
-	"github.com/andrey4d/ytapiserver/templ/view"
+	"github.com/andrey4d/ytapiserver/templ/layout"
 	"github.com/gofiber/fiber/v2"
 )
 
-func GetInfo(c *ytclient.Client) fiber.Handler {
+type InfoHandler struct {
+}
+
+func (h *InfoHandler) GetInfo(client *ytclient.Client) fiber.Handler {
 
 	pageAttributes := GetPageAttributes()
 	pageAttributes.PageTitle = "Main page"
 
 	return func(ctx *fiber.Ctx) error {
-
 		url := ctx.FormValue("video_tag")
 		if url == "" {
 			url = "https://www.youtube.com/watch?v=3WsEDZRif6U"
 		}
 
-		_, err := c.GetVideoInfo(url)
+		_, err := client.GetVideoInfo(url)
 		if err != nil {
 			ctx.Status(fiber.StatusInternalServerError).SendString(fmt.Sprintf("%v", err))
 		}
+		pageAttributes.PageTitle = client.Video.Title
 
-		pageAttributes.PageTitle = c.Video.Title
-		// c.JSON(http.StatusOK, *videoInfo.Formats)
-		// Formats := map[string][]youtube.Format{
-		// 	"Formats": c.Video.Formats,
-		// }
-
-		return Render(ctx, view.Index(c, *pageAttributes))
-		// return ctx.Render("index", Formats)
+		return Render(ctx, layout.UrlLayout(client))
 	}
 }

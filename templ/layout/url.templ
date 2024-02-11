@@ -1,0 +1,65 @@
+package layout
+
+
+import (
+    "github.com/andrey4d/ytapiserver/templ/components"
+    "github.com/andrey4d/ytapiserver/internal/ytclient"
+    "github.com/kkdai/youtube/v2"
+	"strconv"
+    )
+
+templ UrlLayout(client *ytclient.Client){
+    @Description()
+    @components.Div(components.DivAttributes{Class: "container", Id: "description-id", Name: "description"})
+
+
+    @components.Div(components.DivAttributes{Class: "container text-center"}){
+        @components.Div(components.DivAttributes{Class: "row"}){
+            @listColumn("VideoAudio", *client.GetVideoAudioFormatsOnly(), components.InputAttributes{Class: "btn btn-primary mt-0", Type: "button"})
+        }
+        @components.Div(components.DivAttributes{Class: "row"}){
+            @components.Divider() 
+        }
+        
+        @components.Div(components.DivAttributes{Class: "row"}){
+            @listColumn("Video", *client.GetVideoFormatsOnly(), components.InputAttributes{Class: "form-check-input mt-0", Type: "radio"})
+            @listColumn("Audio", *client.GetAudioFormatsOnly(), components.InputAttributes{Class: "form-check-input mt-0", Type: "radio"})
+        }
+    }
+}
+
+templ listColumn(title string, items []youtube.Format, attributes components.InputAttributes){
+    @components.Div(components.DivAttributes{Class: "col"}){
+        @components.Div(components.DivAttributes{Class: "card card-body"}){
+            @components.ListGroup(components.DefaultListGroupAttributes()){
+                @components.ListGroupItem(components.ListGroupItemAttributes{Class: "list-group-item active" }){ {title} }
+                    for _, format := range(items) {
+                      @columnItem(title, format, attributes)
+                    }
+              }
+          }
+      }
+}
+
+templ columnItem(title string, format youtube.Format, attributes components.InputAttributes){
+    @components.ListGroupItem(components.DefaultListGroupItemAttributes()){
+      @components.Div(components.DivAttributes{Class: "input-group-text"}){
+        @components.Input(components.InputAttributes{
+          Type: attributes.Type,
+          Class: attributes.Class,
+          Id: strconv.Itoa(format.ItagNo),
+          Name: title,
+          Value: strconv.Itoa(format.ItagNo),
+         })
+        @components.Label(components.LabelAttributes{
+            For: strconv.Itoa(format.ItagNo) ,
+            Text: format.QualityLabel + " " + format.AudioQuality + " " + strconv.Itoa(format.AudioChannels),
+        })
+        @components.Link(components.LinkAttributes{
+            Url: format.URL,
+            Text: format.MimeType,
+            Name: "video_link",
+        })
+      }
+    }
+}

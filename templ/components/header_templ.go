@@ -11,10 +11,6 @@ import "io"
 import "bytes"
 import "strings"
 
-import (
-	"github.com/andrey4d/ytapiserver/templ/forms"
-)
-
 func headerStyle() templ.CSSClass {
 	var templ_7745c5c3_CSSBuilder strings.Builder
 	templ_7745c5c3_CSSBuilder.WriteString(`text-align:center; 
@@ -83,15 +79,7 @@ func Header(title string) templ.Component {
 					if templ_7745c5c3_Err != nil {
 						return templ_7745c5c3_Err
 					}
-					_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(" ")
-					if templ_7745c5c3_Err != nil {
-						return templ_7745c5c3_Err
-					}
-					templ_7745c5c3_Err = Button(ButtonAttributes{
-						Calass: "btn btn-outline-success",
-						Text:   "Search",
-						Type:   "submit",
-					}).Render(ctx, templ_7745c5c3_Buffer)
+					_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(" <button class=\"btn btn-outline-success\" type=\"button\" hx-get=\"/info/\" hx-target=\"#id_video_info_place\" hx-include=\"#film-url\">Search</button>")
 					if templ_7745c5c3_Err != nil {
 						return templ_7745c5c3_Err
 					}
@@ -100,11 +88,7 @@ func Header(title string) templ.Component {
 					}
 					return templ_7745c5c3_Err
 				})
-				templ_7745c5c3_Err = forms.InfoForm(forms.FormAttributes{
-					Class:    "d-flex",
-					HxPost:   "/info/",
-					HxTraget: "#main-container",
-				}).Render(templ.WithChildren(ctx, templ_7745c5c3_Var4), templ_7745c5c3_Buffer)
+				templ_7745c5c3_Err = Div(DivAttributes{Class: "d-flex"}).Render(templ.WithChildren(ctx, templ_7745c5c3_Var4), templ_7745c5c3_Buffer)
 				if templ_7745c5c3_Err != nil {
 					return templ_7745c5c3_Err
 				}
@@ -143,7 +127,7 @@ func Header(title string) templ.Component {
 			var templ_7745c5c3_Var6 string
 			templ_7745c5c3_Var6, templ_7745c5c3_Err = templ.JoinStringErrs(title)
 			if templ_7745c5c3_Err != nil {
-				return templ.Error{Err: templ_7745c5c3_Err, FileName: `templ/components/header.templ`, Line: 47, Col: 16}
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `templ/components/header.templ`, Line: 37, Col: 16}
 			}
 			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var6))
 			if templ_7745c5c3_Err != nil {
@@ -163,30 +147,6 @@ func Header(title string) templ.Component {
 			return templ_7745c5c3_Err
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("</header>")
-		if templ_7745c5c3_Err != nil {
-			return templ_7745c5c3_Err
-		}
-		if !templ_7745c5c3_IsBuffer {
-			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteTo(templ_7745c5c3_W)
-		}
-		return templ_7745c5c3_Err
-	})
-}
-
-func BootstrapHeader() templ.Component {
-	return templ.ComponentFunc(func(ctx context.Context, templ_7745c5c3_W io.Writer) (templ_7745c5c3_Err error) {
-		templ_7745c5c3_Buffer, templ_7745c5c3_IsBuffer := templ_7745c5c3_W.(*bytes.Buffer)
-		if !templ_7745c5c3_IsBuffer {
-			templ_7745c5c3_Buffer = templ.GetBuffer()
-			defer templ.ReleaseBuffer(templ_7745c5c3_Buffer)
-		}
-		ctx = templ.InitializeContext(ctx)
-		templ_7745c5c3_Var7 := templ.GetChildren(ctx)
-		if templ_7745c5c3_Var7 == nil {
-			templ_7745c5c3_Var7 = templ.NopComponent
-		}
-		ctx = templ.ClearChildren(ctx)
-		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<header class=\"p-3 text-bg-dark\"><div class=\"container\"><div class=\"d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start\"><a href=\"/\" class=\"d-flex align-items-center mb-2 mb-lg-0 text-white text-decoration-none\"><svg class=\"bi me-2\" width=\"40\" height=\"32\" role=\"img\" aria-label=\"Bootstrap\"><use xlink:href=\"#bootstrap\"></use></svg></a><ul class=\"nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0\"><li><a href=\"#\" class=\"nav-link px-2 text-secondary\">Home</a></li><li><a href=\"#\" class=\"nav-link px-2 text-white\">Features</a></li><li><a href=\"#\" class=\"nav-link px-2 text-white\">Pricing</a></li><li><a href=\"#\" class=\"nav-link px-2 text-white\">FAQs</a></li><li><a href=\"#\" class=\"nav-link px-2 text-white\">About</a></li></ul><form class=\"col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3\" role=\"search\"><input type=\"search\" class=\"form-control form-control-dark text-bg-dark\" placeholder=\"Search...\" aria-label=\"Search\"></form><div class=\"text-end\"><button type=\"button\" class=\"btn btn-outline-light me-2\">Login</button></div></div></div></header>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}

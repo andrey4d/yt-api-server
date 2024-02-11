@@ -1,0 +1,39 @@
+package layout
+
+import (
+    "strings"
+    "github.com/andrey4d/ytapiserver/templ/components"
+)
+
+type DescriptionAttributes struct {
+    Author string
+    Description string
+}
+
+
+
+templ Description() {
+   @components.Div(components.DivAttributes{Class: "p-3 m-0 border-0"}){
+         <button class="btn btn-info" type="button" hx-get="/description/" hx-target="#description-content-id" >
+                Description:
+        </button>
+    }
+     @components.Div(components.DivAttributes{Class: "container", Id: "description-content-id", Name: "description-content"})
+}
+
+
+templ DescriptionContent(attributes DescriptionAttributes) {
+    <p>Author: { attributes.Author } </p>
+    @components.Div(components.DivAttributes{Class: "card card-body col-md-4 col-xxl-4 ms-3"}){
+        for _, describ_item := range SplitDescription(attributes.Description) {
+            {describ_item}<br></br>
+        }    
+    }
+}
+
+func SplitDescription(description string) []string{
+    return strings.Split(description, "\n")
+}
+
+
+   	

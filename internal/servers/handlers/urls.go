@@ -11,7 +11,9 @@ import (
 	"github.com/gofiber/fiber/v2"
 )
 
-func GetUrls(c *ytclient.Client) fiber.Handler {
+type UrlsHandler struct{}
+
+func (h *UrlsHandler) GetUrls(c *ytclient.Client) fiber.Handler {
 
 	return func(ctx *fiber.Ctx) error {
 		tag := ctx.FormValue("films")
