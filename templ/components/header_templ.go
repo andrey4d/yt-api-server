@@ -79,7 +79,7 @@ func Header(title string) templ.Component {
 					if templ_7745c5c3_Err != nil {
 						return templ_7745c5c3_Err
 					}
-					_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(" <button class=\"btn btn-outline-success\" type=\"button\" hx-get=\"/info/\" hx-target=\"#id_video_info_place\" hx-include=\"#film-url\">Search</button>")
+					_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(" <button class=\"btn btn-outline-success\" type=\"button\" hx-get=\"/info/\" hx-target=\"#id_video_info_place\" hx-include=\"#film-url\" hx-on::after-request=\"setTitle()\">Search</button>")
 					if templ_7745c5c3_Err != nil {
 						return templ_7745c5c3_Err
 					}
@@ -120,14 +120,14 @@ func Header(title string) templ.Component {
 				templ_7745c5c3_Buffer = templ.GetBuffer()
 				defer templ.ReleaseBuffer(templ_7745c5c3_Buffer)
 			}
-			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<h1>")
+			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<h1 class=\"mx-auto p-2\" id=\"video-headline\" name=\"video-headline\">")
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
 			var templ_7745c5c3_Var6 string
 			templ_7745c5c3_Var6, templ_7745c5c3_Err = templ.JoinStringErrs(title)
 			if templ_7745c5c3_Err != nil {
-				return templ.Error{Err: templ_7745c5c3_Err, FileName: `templ/components/header.templ`, Line: 37, Col: 16}
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `templ/components/header.templ`, Line: 37, Col: 78}
 			}
 			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var6))
 			if templ_7745c5c3_Err != nil {

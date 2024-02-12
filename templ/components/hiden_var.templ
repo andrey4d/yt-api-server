@@ -1,0 +1,14 @@
+package components
+
+type Variable struct{
+    Class string
+    Id string
+    Name string
+    Value string
+}
+
+templ Var(varibale Variable){
+    <p name={varibale.Name} id={varibale.Id} class={varibale.Class} hidden>
+        {varibale.Value}
+    </p>
+}

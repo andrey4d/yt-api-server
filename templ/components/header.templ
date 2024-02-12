@@ -27,7 +27,7 @@ templ Header(title string){
                           Name: "video_tag",
                           Placeholder: "ryuCtW3RXoo",
                         })
-          <button class="btn btn-outline-success" type="button" hx-get="/info/" hx-target="#id_video_info_place" hx-include="#film-url">
+          <button class="btn btn-outline-success" type="button" hx-get="/info/" hx-target="#id_video_info_place" hx-include="#film-url" hx-on::after-request="setTitle()">
             Search
           </button>
         }
@@ -35,7 +35,7 @@ templ Header(title string){
     }
   </nav>
     @Div(DivAttributes{Class: "d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start"}){
-      <h1>{title}</h1>
+      <h1 class="mx-auto p-2" id="video-headline" name="video-headline">{title}</h1>
     }
   </header>
 }

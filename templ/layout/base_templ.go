@@ -85,7 +85,7 @@ func Base(baseAttributes BaseAttributes) templ.Component {
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("</html>")
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<script type=\"text/javascript\">\n        function setTitle() {\n            const newt = document.getElementById(\"var_title\");\n            const headline = document.getElementById(\"video-headline\");\n            const title = document.getElementById(\"page-title\");\n            headline.innerText = newt.innerText;\n            title.innerText = newt.innerText;\n            }\n    </script></html>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}

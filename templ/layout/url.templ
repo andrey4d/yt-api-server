@@ -10,6 +10,7 @@ import (
 
 templ UrlLayout(client *ytclient.Client){
     @Description()
+    @components.Var(components.Variable{Name: "var_title", Id: "var_title", Value: client.Video.Title})
     @components.Div(components.DivAttributes{Class: "container", Id: "description-id", Name: "description"})
 
 
