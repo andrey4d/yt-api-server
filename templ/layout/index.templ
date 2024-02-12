@@ -1,0 +1,15 @@
+package layout
+
+import (
+	"github.com/andrey4d/ytapiserver/templ/components"
+  "github.com/andrey4d/ytapiserver/internal/ytclient"
+)
+
+
+templ Index(client *ytclient.Client, pageAttributes BaseAttributes){
+  @Base(pageAttributes){
+
+    @components.Div(components.DivAttributes{Class: "container", Id: "id_video_info_place", Name: "video_info_place"})
+  }
+}
+

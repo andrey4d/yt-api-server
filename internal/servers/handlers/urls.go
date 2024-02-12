@@ -17,13 +17,12 @@ func (h *UrlsHandler) GetUrls(c *ytclient.Client) fiber.Handler {
 
 	return func(ctx *fiber.Ctx) error {
 		tag := ctx.FormValue("films")
-		fmt.Println("TAG", tag)
 
 		format, err := c.GetFormat(tag)
 		if err != nil {
 			ctx.Status(fiber.StatusInternalServerError).SendString(fmt.Sprintf("%v", err))
 		}
-		fmt.Println(format)
+
 		link_text := fmt.Sprintf("Quality=%s, audio channels=%d, video=%s", format.QualityLabel, format.AudioChannels, format.MimeType)
 
 		return ctx.SendString(fmt.Sprintf("<a href='%s'>%s</a>", format.URL, link_text))

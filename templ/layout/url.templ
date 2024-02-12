@@ -26,6 +26,16 @@ templ UrlLayout(client *ytclient.Client){
             @listColumn("Video", *client.GetVideoFormatsOnly(), components.InputAttributes{Class: "form-check-input mt-0", Type: "radio"})
             @listColumn("Audio", *client.GetAudioFormatsOnly(), components.InputAttributes{Class: "form-check-input mt-0", Type: "radio"})
         }
+        @components.Div(components.DivAttributes{Class: "col-4"}){
+            <button class="btn btn-primary"  type="button" hx-include="[name='Video'], [name='Audio']" hx-target="#output_download_info" hx-get="/download/">
+                Download
+            </button>
+        }
+        @components.Div(components.DivAttributes{Class: "col", Id: "output_download_info"}){
+                "Download"
+        }
+
+
     }
 }
 

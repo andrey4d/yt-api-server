@@ -3,4 +3,4 @@ bin
 tmp
 *.txt
 *.json
-
+*.js

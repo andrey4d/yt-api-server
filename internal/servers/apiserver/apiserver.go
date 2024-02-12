@@ -54,18 +54,19 @@ func (s *ApiServer) Start() error {
 }
 
 func (s *ApiServer) ConfigureRouter() {
-
-	s.app.Get("/hello", handlers.GetHello(s.logHandler))
 	s.app.Get("/about", handlers.GetAbout())
 
 	handlerIndex := handlers.IndexHandler{}
 	handlerInfo := handlers.InfoHandler{}
 	handlerUrls := handlers.UrlsHandler{}
 	handlerDescription := handlers.DescriptionHandler{}
+	handlerDownload := handlers.DownloadHandler{}
 
 	s.app.Get("/", handlerIndex.GetIndex(s.client))
 	s.app.Get("/info/", handlerInfo.GetInfo(s.client))
 	s.app.Get("/url/", handlerUrls.GetUrls(s.client))
+
+	s.app.Get("/download/", handlerDownload.GetDownload(s.client))
 	s.app.Get("/description/", handlerDescription.GetDescription(s.client))
 
 }

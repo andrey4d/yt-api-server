@@ -15,7 +15,11 @@ type FormAttributes struct {
 	HxTraget  string
 	HxInclude string
 	HxTrigger string
+	HxOn      string
+	HxSwap    string
 	Class     string
+	Id        string
+	Name      string
 }
 
 func Form(attributes FormAttributes) templ.Component {

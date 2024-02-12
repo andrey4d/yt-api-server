@@ -6,7 +6,7 @@ package handlers
 
 import (
 	"github.com/andrey4d/ytapiserver/internal/ytclient"
-	"github.com/andrey4d/ytapiserver/templ/view"
+	"github.com/andrey4d/ytapiserver/templ/layout"
 	"github.com/gofiber/fiber/v2"
 )
 
@@ -18,6 +18,6 @@ func (h *IndexHandler) GetIndex(client *ytclient.Client) fiber.Handler {
 		pageAttributes := GetPageAttributes()
 		pageAttributes.PageTitle = "Youtube get video URLs."
 
-		return Render(ctx, view.Index(client, *pageAttributes))
+		return Render(ctx, layout.Index(client, *pageAttributes))
 	}
 }

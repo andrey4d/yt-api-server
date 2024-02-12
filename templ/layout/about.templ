@@ -1,7 +1,7 @@
-package view
+package layout
 
 import (
-	"github.com/andrey4d/ytapiserver/templ/layout"
+
   "github.com/andrey4d/ytapiserver/templ/components"
 )
 
@@ -17,9 +17,9 @@ func getItems(messages []string) []components.ListGroupItemAttributes{
 }
 
 
-templ About(messages []string, pageAttributes layout.BaseAttributes ){
+templ About(messages []string, pageAttributes BaseAttributes ){
       
-      @layout.Base(pageAttributes){
+      @Base(pageAttributes){
         @components.Div(components.DivAttributes{Class: "container"}){
           @components.Div(components.DivAttributes{Class: "col-md-4 col-xxl-4 ms-3"}){
             @components.ListGroup(components.ListGroupAttributes{

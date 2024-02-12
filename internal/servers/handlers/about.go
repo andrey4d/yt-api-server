@@ -5,7 +5,7 @@
 package handlers
 
 import (
-	"github.com/andrey4d/ytapiserver/templ/view"
+	"github.com/andrey4d/ytapiserver/templ/layout"
 	"github.com/gofiber/fiber/v2"
 )
 
@@ -15,7 +15,7 @@ func GetAbout() fiber.Handler {
 	return func(c *fiber.Ctx) error {
 		pageAttributes := GetPageAttributes()
 		pageAttributes.PageTitle = "About this project."
-		return Render(c, view.About(about, *pageAttributes))
+		return Render(c, layout.About(about, *pageAttributes))
 	}
 
 }
