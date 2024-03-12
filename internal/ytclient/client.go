@@ -64,7 +64,7 @@ func (c *Client) GetUrl(tag string) (string, error) {
 	return url, nil
 }
 
-func (c *Client) GetAudioFormatsOnly() *[]youtube.Format {
+func (c *Client) GetVideoFormatsOnly() *[]youtube.Format {
 	outFormats := []youtube.Format{}
 	for _, format := range c.Video.Formats {
 		if format.AudioChannels == 0 {
@@ -74,7 +74,7 @@ func (c *Client) GetAudioFormatsOnly() *[]youtube.Format {
 	return &outFormats
 }
 
-func (c *Client) GetVideoFormatsOnly() *[]youtube.Format {
+func (c *Client) GetAudioFormatsOnly() *[]youtube.Format {
 	outFormats := []youtube.Format{}
 	for _, format := range c.Video.Formats {
 		if format.QualityLabel == "" {
@@ -109,8 +109,10 @@ func (c *Client) GetVideoAudioFormatsOnly() *[]youtube.Format {
 // 	  formatsByType["audio"] = append(formatsByType["audio"], &format)
 // 	}
 //   }
-// ffmpeg -y -i https://rr2---sn-oxu8pnpvo-nq8e.googlevideo.com/videoplayback?expire=1709927450&ei=uhfrZb6IDbuFhcIP_ca-6Ak&ip=129.159.138.23&id=o-ANZOAGIDaVO-KQpV0P7St2OcQ8pels7wfv6-EqBFuxrC&itag=139&source=youtube&requiressl=yes&xpc=EgVo2aDSNQ%3D%3D&mh=dG&mm=31%2C29&mn=sn-oxu8pnpvo-nq8e%2Csn-ua87zn7l&ms=au%2Crdu&mv=u&mvi=2&pl=23&vprv=1&svpuc=1&mime=audio%2Fmp4&gir=yes&clen=5176732&dur=848.828&lmt=1686670171495702&mt=1709905572&fvip=3&keepalive=yes&fexp=24007246&c=ANDROID&txp=5432434&sparams=expire%2Cei%2Cip%2Cid%2Citag%2Csource%2Crequiressl%2Cxpc%2Cvprv%2Csvpuc%2Cmime%2Cgir%2Cclen%2Cdur%2Clmt&sig=AJfQdSswRQIgewcOWPE6wrcd0EWTq-FXFONdG4uUttuF4tIDRjCAj9wCIQCsKYSNJecaB0f6UViy-68sznWmsaOHBp-fFee3RJq2aQ%3D%3D&lsparams=mh%2Cmm%2Cmn%2Cms%2Cmv%2Cmvi%2Cpl&lsig=APTiJQcwRgIhAKqYDQ_yM9rG3DjeoEGZ8Gnx2w8v1x-0CTpBxMWaAv_CAiEApAI5XZBRfb7qTJvfnrDTevtbH0VnFJWPIGNjSyejCAk%3D \
-// -i https://rr2---sn-oxu8pnpvo-nq8e.googlevideo.com/videoplayback?expire=1709927450&ei=uhfrZb6IDbuFhcIP_ca-6Ak&ip=129.159.138.23&id=o-ANZOAGIDaVO-KQpV0P7St2OcQ8pels7wfv6-EqBFuxrC&itag=160&source=youtube&requiressl=yes&xpc=EgVo2aDSNQ%3D%3D&mh=dG&mm=31%2C29&mn=sn-oxu8pnpvo-nq8e%2Csn-ua87zn7l&ms=au%2Crdu&mv=u&mvi=2&pl=23&vprv=1&svpuc=1&mime=video%2Fmp4&gir=yes&clen=1361709&dur=848.699&lmt=1686670413323662&mt=1709905572&fvip=3&keepalive=yes&fexp=24007246&c=ANDROID&txp=5432434&sparams=expire%2Cei%2Cip%2Cid%2Citag%2Csource%2Crequiressl%2Cxpc%2Cvprv%2Csvpuc%2Cmime%2Cgir%2Cclen%2Cdur%2Clmt&sig=AJfQdSswRAIgRGXKhxlEaYiwjB4m9Fee8_1P2Y3qYV4lFTNj_YXCQ_kCIGvP1LGpEcjSNQgqIEtqznb5E7REL2QMt1T21J2sHjSr&lsparams=mh%2Cmm%2Cmn%2Cms%2Cmv%2Cmvi%2Cpl&lsig=APTiJQcwRgIhAKqYDQ_yM9rG3DjeoEGZ8Gnx2w8v1x-0CTpBxMWaAv_CAiEApAI5XZBRfb7qTJvfnrDTevtbH0VnFJWPIGNjSyejCAk%3D \
-// -c copy -shortest out.mp4
+
+// VIDEO="https://rr3---sn-hxb54vo-v8cs.googlevideo.com/videoplayback?expire=1710236502&ei=9s7vZcKjEsrHv_IP9ciqsAs&ip=188.162.12.26&id=o-AFuZrwckept0_9n1Cxvg8dTA5m1Ms55ndiTohS1gDjNP&itag=160&source=youtube&requiressl=yes&xpc=EgVo2aDSNQ%3D%3D&mh=dG&mm=31%2C29&mn=sn-hxb54vo-v8cs%2Csn-n8v7znz7&ms=au%2Crdu&mv=m&mvi=3&pl=23&initcwndbps=656250&vprv=1&svpuc=1&mime=video%2Fmp4&gir=yes&clen=1361709&dur=848.699&lmt=1686670413323662&mt=1710214628&fvip=11&keepalive=yes&fexp=24007246&beids=24350321&c=ANDROID&txp=5432434&sparams=expire%2Cei%2Cip%2Cid%2Citag%2Csource%2Crequiressl%2Cxpc%2Cvprv%2Csvpuc%2Cmime%2Cgir%2Cclen%2Cdur%2Clmt&sig=AJfQdSswRAIgGnhGIyMd96BjRDn7pOMQVfodVpwSGgytXBCQZWDqMhMCIEHv69OuBEb_tjoqtAu6bAMxtqmcc3X4NMvsEKZl3KOu&lsparams=mh%2Cmm%2Cmn%2Cms%2Cmv%2Cmvi%2Cpl%2Cinitcwndbps&lsig=APTiJQcwRAIgNrl9pEf-52Cfj1cYYoUILDTNIfimzI1vvOywwyBqjG0CICf_IGlEf9mbxRPIjGTB94DXmZ2D0fJ5psJ2w91LkGM0"
+// AUDIO="https://rr3---sn-hxb54vo-v8cs.googlevideo.com/videoplayback?expire=1710236502&ei=9s7vZcKjEsrHv_IP9ciqsAs&ip=188.162.12.26&id=o-AFuZrwckept0_9n1Cxvg8dTA5m1Ms55ndiTohS1gDjNP&itag=139&source=youtube&requiressl=yes&xpc=EgVo2aDSNQ%3D%3D&mh=dG&mm=31%2C29&mn=sn-hxb54vo-v8cs%2Csn-n8v7znz7&ms=au%2Crdu&mv=m&mvi=3&pl=23&initcwndbps=656250&vprv=1&svpuc=1&mime=audio%2Fmp4&gir=yes&clen=5176732&dur=848.828&lmt=1686670171495702&mt=1710214628&fvip=11&keepalive=yes&fexp=24007246&beids=24350321&c=ANDROID&txp=5432434&sparams=expire%2Cei%2Cip%2Cid%2Citag%2Csource%2Crequiressl%2Cxpc%2Cvprv%2Csvpuc%2Cmime%2Cgir%2Cclen%2Cdur%2Clmt&sig=AJfQdSswRAIgaIWgafGhd6asU7OGCDAkwoEVC79MYtrp9dwdLiDV0dECIGj3PhSbll0MYbfpUycnT8_UmffJNk4ub9e1-QhHpvgQ&lsparams=mh%2Cmm%2Cmn%2Cms%2Cmv%2Cmvi%2Cpl%2Cinitcwndbps&lsig=APTiJQcwRAIgNrl9pEf-52Cfj1cYYoUILDTNIfimzI1vvOywwyBqjG0CICf_IGlEf9mbxRPIjGTB94DXmZ2D0fJ5psJ2w91LkGM0"
+// ffmpeg -y -i "${VIDEO}" -i "${AUDIO}" -c copy -loglevel warning -shortest out.mp4
+// ffmpeg -y -i "${VIDEO}" -i "${AUDIO}" -f matroska -loglevel warning -shortest pipe:1
 // return &formatsByType
 // }

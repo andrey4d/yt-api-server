@@ -1,0 +1,27 @@
+version: '3'
+services:
+  goytdl:
+    image: goytdl
+    restart: unless-stopped
+    security_opt:
+      - no-new-privileges:true
+    expose:
+      - "8081"
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.goytdl-http-router.entrypoints=websecure"
+      - "traefik.http.routers.goytdl-http-router.rule=Host(`goytdl.duckdns.org`)" 
+      - "traefik.http.routers.goytdl-http-router.service=goytdl-http-service"
+      - "traefik.http.routers.goytdl-http-router.tls=true"
+      - "traefik.http.services.goytdl-http-service.loadbalancer.server.port=8081"
+      - "traefik.http.routers.goytdl-http-router.tls.certresolver=my-cert-resolver"
+      - "traefik.http.routers.goytdl-http-router.tls.domains[0].main=goytdl.duckdns.org"
+      - "traefik.http.routers.goytdl-http-router.tls.domains[0].sans=goytdl.duckdns.org"
+    volumes:
+      - ./apiserver.yaml:/configs/apiserver.yaml:ro
+    networks:
+      traefik:
+
+networks:
+  traefik:
+    external: true
