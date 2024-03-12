@@ -16,11 +16,9 @@ var config *Config
 
 func NewConfig() *Config {
 	return &Config{
-		Port:          "8080",
-		Address:       "127.0.0.1",
-		LogLevel:      "debug",
-		Template_dir:  "web/templates",
-		Template_type: ".html",
+		Port:     "8080",
+		Address:  "127.0.0.1",
+		LogLevel: "debug",
 	}
 }
 

@@ -18,26 +18,20 @@ func getItems(messages []string) []components.ListGroupItemAttributes{
 
 
 templ About(messages []string, pageAttributes BaseAttributes ){
-      
-      @Base(pageAttributes){
-        @components.Div(components.DivAttributes{Class: "container"}){
-          @components.Div(components.DivAttributes{Class: "col-md-4 col-xxl-4 ms-3"}){
-            @components.ListGroup(components.ListGroupAttributes{
-                                Class: "list-group",
-                                Items: getItems(messages),
-                                }){ 
-                                    @components.ListGroupItem(components.ListGroupItemAttributes{
-                                      Class: "list-group-item active",
-                                    }){
-                                      @components.Input(components.DefaultInputAttributes())
-                                    }
-                                  }
- 
-          }
-
-          
-        }
+  @Base(pageAttributes){
+    @components.Div(components.DivAttributes{Class: "container"}){
+      @components.Div(components.DivAttributes{Class: "col-md-4 col-xxl-4 ms-3"}){
+        @components.ListGroup(components.ListGroupAttributes{
+            Class: "list-group",
+            Items: getItems(messages),
+            }){ 
+                @components.ListGroupItem(components.ListGroupItemAttributes{
+                  Class: "list-group-item active",
+                }){
+                  @components.Input(components.DefaultInputAttributes())
+                }
+              }
       }
-        
-      
+    }
+  }    
 }

@@ -11,6 +11,7 @@ import "io"
 import "bytes"
 
 import "github.com/andrey4d/ytapiserver/templ/components"
+import "github.com/andrey4d/ytapiserver/templ/scripts"
 
 type BaseAttributes struct {
 	BodyClass   string
@@ -85,7 +86,11 @@ func Base(baseAttributes BaseAttributes) templ.Component {
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<script type=\"text/javascript\">\n        function setTitle() {\n            const newt = document.getElementById(\"var_title\");\n            const headline = document.getElementById(\"video-headline\");\n            const title = document.getElementById(\"page-title\");\n            headline.innerText = newt.innerText;\n            title.innerText = newt.innerText;\n            }\n    </script></html>")
+		templ_7745c5c3_Err = scripts.SetTitle().Render(ctx, templ_7745c5c3_Buffer)
+		if templ_7745c5c3_Err != nil {
+			return templ_7745c5c3_Err
+		}
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("</html>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}

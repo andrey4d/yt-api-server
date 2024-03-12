@@ -28,6 +28,7 @@ func main() {
 
 	config := config.NewConfig()
 	yaml.ParseFile(configPath, config, LogHandler)
+	LogHandler.LogModuleInfo("apiServer").Info("load config ", config)
 
 	LogHandler.SetLogLevel(config.LogLevel)
 

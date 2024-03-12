@@ -9,11 +9,13 @@ import (
 
 	"github.com/andrey4d/ytapiserver/internal/ytclient"
 	// "github.com/andrey4d/ytapiserver/templ/forms"
+	"github.com/andrey4d/ytapiserver/internal/log"
 	"github.com/andrey4d/ytapiserver/templ/layout"
 	"github.com/gofiber/fiber/v2"
 )
 
 type InfoHandler struct {
+	LogHandler *log.LogHandl
 }
 
 func (h *InfoHandler) GetInfo(client *ytclient.Client) fiber.Handler {
@@ -23,8 +25,9 @@ func (h *InfoHandler) GetInfo(client *ytclient.Client) fiber.Handler {
 
 	return func(ctx *fiber.Ctx) error {
 		url := ctx.FormValue("video_tag")
+		h.LogHandler.LogModuleInfo("GetInfo()").Infoln(url)
 		if url == "" {
-			url = "https://www.youtube.com/watch?v=3WsEDZRif6U"
+			url = "3WsEDZRif6U"
 		}
 
 		_, err := client.GetVideoInfo(url)

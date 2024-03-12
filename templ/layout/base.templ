@@ -1,6 +1,7 @@
 package layout
 
 import "github.com/andrey4d/ytapiserver/templ/components"
+import "github.com/andrey4d/ytapiserver/templ/scripts"
 
 type BaseAttributes struct {
     BodyClass string
@@ -19,15 +20,7 @@ templ Base(baseAttributes BaseAttributes){
         {children...}
     </body>
     @components.Footer(components.DefaultFooterAttributes())
-    <script type="text/javascript">
-        function setTitle() {
-            const newt = document.getElementById("var_title");
-            const headline = document.getElementById("video-headline");
-            const title = document.getElementById("page-title");
-            headline.innerText = newt.innerText;
-            title.innerText = newt.innerText;
-            }
-    </script>
+    @scripts.SetTitle()
 </html>
 }
 

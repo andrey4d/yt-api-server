@@ -15,7 +15,6 @@ import (
 	"github.com/gofiber/fiber/v2/middleware/logger"
 	"github.com/gofiber/fiber/v2/middleware/requestid"
 
-	"github.com/gofiber/template/html/v2"
 	"github.com/sirupsen/logrus"
 )
 
@@ -28,13 +27,9 @@ type ApiServer struct {
 
 func New(config *config.Config) *ApiServer {
 
-	viewEngine := html.New(config.Template_dir, config.Template_type)
-
-	fiberConfig := fiber.Config{Views: viewEngine}
-
 	return &ApiServer{
 		config:     config,
-		app:        *fiber.New(fiberConfig),
+		app:        *fiber.New(),
 		client:     ytclient.New(),
 		logHandler: &log.LogHandl{},
 	}
@@ -57,7 +52,7 @@ func (s *ApiServer) ConfigureRouter() {
 	s.app.Get("/about", handlers.GetAbout())
 
 	handlerIndex := handlers.IndexHandler{}
-	handlerInfo := handlers.InfoHandler{}
+	handlerInfo := handlers.InfoHandler{LogHandler: s.logHandler}
 	handlerUrls := handlers.UrlsHandler{}
 	handlerDescription := handlers.DescriptionHandler{}
 	handlerDownload := handlers.DownloadHandler{}
