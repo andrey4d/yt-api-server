@@ -23,7 +23,7 @@ services:
       - "traefik.http.routers.goytdl-http-router.tls.domains[0].main=goytdl.duckdns.org"
       - "traefik.http.routers.goytdl-http-router.tls.domains[0].sans=goytdl.duckdns.org"
     volumes:
-      - ./apiserver.yaml:/configs/apiserver.yaml:ro
+      - ./configs/apiserver.yaml:/configs/apiserver.yaml:ro
     networks:
       traefik:
 
