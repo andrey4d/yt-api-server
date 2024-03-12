@@ -7,3 +7,8 @@ docker build -t registry.home.local/goytdl .
 ```shell
 docker run -it --rm -p 8081:8081 -v ./configs/apiserver.yaml:/configs/apiserver.yaml registry.home.local/goytdl
 ```
+
+### Special Thanks
+```url
+https://github.com/kkdai/youtube
+```
