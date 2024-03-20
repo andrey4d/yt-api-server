@@ -12,7 +12,7 @@ templ UrlLayout(client *ytclient.Client){
     @Description()
     @components.Var(components.Variable{Name: "var_title", Id: "var_title", Value: client.Video.Title})
     @components.Div(components.DivAttributes{Class: "container", Id: "description-id", Name: "description"})
-
+    @components.Divider()
 
     @components.Div(components.DivAttributes{Class: "container text-center"}){
         @components.Div(components.DivAttributes{Class: "row"}){
@@ -26,6 +26,7 @@ templ UrlLayout(client *ytclient.Client){
             @listColumn("Video", *client.GetVideoFormatsOnly(), components.InputAttributes{Class: "form-check-input mt-0", Type: "radio"})
             @listColumn("Audio", *client.GetAudioFormatsOnly(), components.InputAttributes{Class: "form-check-input mt-0", Type: "radio"})
         }
+        @components.Divider()
         @components.Div(components.DivAttributes{Class: "col-4"}){
             <button class="btn btn-primary"  type="button" hx-include="[name='Video'], [name='Audio']" hx-target="#output_download_info" hx-get="/download/">
                 Download
