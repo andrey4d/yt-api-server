@@ -3,7 +3,7 @@ module github.com/andrey4d/ytapiserver
 go 1.23.2
 
 require (
-	github.com/a-h/templ v0.2.543
+	github.com/a-h/templ v0.2.778
 	github.com/gofiber/fiber/v2 v2.52.0
 	github.com/kkdai/youtube/v2 v2.10.1
 	github.com/sirupsen/logrus v1.9.3
@@ -30,6 +30,6 @@ require (
 	github.com/valyala/bytebufferpool v1.0.0 // indirect
 	github.com/valyala/fasthttp v1.52.0 // indirect
 	github.com/valyala/tcplisten v1.0.0 // indirect
-	golang.org/x/sys v0.18.0 // indirect
+	golang.org/x/sys v0.23.0 // indirect
 	golang.org/x/text v0.14.0 // indirect
 )
